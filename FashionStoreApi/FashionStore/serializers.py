@@ -1,13 +1,13 @@
 from rest_framework import serializers
 from FashionStore.models import User, TokenBlacklist
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from rest_framework_simplejwt.tokens import (RefreshToken,AccessToken)
 from rest_framework_simplejwt.exceptions import TokenError
 from django.contrib.auth import password_validation
 from datetime import datetime, timezone
 
 
-class RegisterSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
@@ -56,26 +56,26 @@ class LoginSerializer(TokenObtainPairSerializer):
 
 class LogoutSerializer(serializers.Serializer):
     access = serializers.CharField()
+
     def validate(self, attrs):
         try:
-            self.token = AccessToken(attrs["access"])
-        except Exception:
+            token = AccessToken(attrs["access"])
+            jti = token["jti"]
+            user_id = token["user_id"]
+            exp = token["exp"]
+            expires_at = datetime.fromtimestamp(exp, tz=timezone.utc)
+            TokenBlacklist.objects.get_or_create(
+                jti=jti,
+                defaults={
+                    "user_id": user_id,
+                    "expires_at": expires_at,
+                },
+            )
+        except Exception as e:
+            print("LOGOUT ERROR:", repr(e))
             raise serializers.ValidationError({"access": "Invalid access token."})
 
         return attrs
-
-    def create(self, validated_data):
-        token = self.token
-        outstanding_token, _ = OutstandingToken.objects.get_or_create(
-            jti=token["jti"],
-            defaults={
-                "token": str(token),
-                "created_at": token.current_time,
-                "expires_at": token["exp"],
-            },
-        )
-        BlacklistedToken.objects.get_or_create(token=outstanding_token)
-        return {}
 
 
 class ProfileSerializer(serializers.ModelSerializer):
