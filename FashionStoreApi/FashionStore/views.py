@@ -9,7 +9,6 @@ from FashionStore import serializers, perms, paginators
 
 # Create your views here.
 class RegisterView(generics.CreateAPIView):
-
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
     permission_classes = [permissions.AllowAny]
@@ -39,29 +38,20 @@ class ProfileViewSet(viewsets.ViewSet):
         if request.method.__eq__("GET"):
             serializer = serializers.ProfileSerializer(request.user)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        serializer = serializers.ProfileUpdateSerializer(
-            request.user, data=request.data, partial=True
-        )
+        serializer = serializers.ProfileSerializer(request.user, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(
-            serializers.ProfileSerializer(request.user).data, status=status.HTTP_200_OK
-        )
+        return Response(serializers.ProfileSerializer(request.user).data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=["patch"], url_path="change-password")
     def change_password(self, request):
-        serializer = serializers.ChangePasswordSerializer(
-            data=request.data, context={"request": request}
-        )
-
+        serializer = serializers.ChangePasswordSerializer(data=request.data, context={"request": request})
         serializer.is_valid(raise_exception=True)
         request.user.set_password(serializer.validated_data["newPassword"])
         request.user.save()
 
-        return Response(
-            {"message": "Password changed successfully."}, status=status.HTTP_200_OK
-        )
+        return Response({"message": "Password changed successfully."}, status=status.HTTP_200_OK)
 
 
 class UserViewSet(viewsets.ViewSet):
@@ -74,8 +64,7 @@ class UserViewSet(viewsets.ViewSet):
         if page is not None:
             serializer = serializers.UserSerializer(page, many=True)
             return p.get_paginated_response(serializer.data)
-
-        serializer = serializer.Serializer(users, many=True)
+        serializer = serializer.UserSerializer(users, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -85,7 +74,16 @@ class UserViewSet(viewsets.ViewSet):
         except User.DoesNotExist:
             return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
         s = serializers.UserSerializer(user)
-        return Response(
-            s.data,
-            status=status.HTTP_200_OK
-        )
+        return Response(s.data, status=status.HTTP_200_OK)
+
+    @action(methods=["patch"], detail=True, url_path="active")
+    def active(self, request, pk=None):
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+        serializer = serializers.UserActiveSerializer(user, data=request.data, partial=True, context={"request": request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from FashionStore.models import User, TokenBlacklist
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.tokens import (RefreshToken,AccessToken)
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.exceptions import TokenError
 from django.contrib.auth import password_validation
 from datetime import datetime, timezone
@@ -10,15 +10,7 @@ from datetime import datetime, timezone
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = [
-            "id",
-            "username",
-            "first_name",
-            "last_name",
-            "email",
-            "avatar",
-            "password",
-        ]
+        fields = ["id", "username", "first_name", "last_name", "email", "avatar", "password"]
         extra_kwargs = {
             "password": {"write_only": True},
         }
@@ -82,12 +74,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "first_name", "last_name", "email", "avatar"]
-
-
-class ProfileUpdateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ["id", "username", "first_name", "last_name", "email", "avatar"]
+        read_only_fields = ["id"]
 
     def validate_avatar(self, value):
         if value.size > 5 * 1024 * 1024:
@@ -97,7 +84,6 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
 
 class ChangePasswordSerializer(serializers.Serializer):
     oldPassword = serializers.CharField(write_only=True, required=True)
-
     newPassword = serializers.CharField(write_only=True, required=True)
 
     def validate(self, attrs):
@@ -106,21 +92,25 @@ class ChangePasswordSerializer(serializers.Serializer):
         new_password = attrs["newPassword"]
 
         if not old_password.strip():
-            raise serializers.ValidationError(
-                {"oldPassword": "Old password cannot be empty."}
-            )
+            raise serializers.ValidationError({"oldPassword": "Old password cannot be empty."})
         if not new_password.strip():
-            raise serializers.ValidationError(
-                {"newPassword": "New password cannot be empty."}
-            )
+            raise serializers.ValidationError({"newPassword": "New password cannot be empty."})
         if not user.check_password(old_password):
-            raise serializers.ValidationError(
-                {"oldPassword": "Old password is incorrect."}
-            )
+            raise serializers.ValidationError({"oldPassword": "Old password is incorrect."})
         if old_password == new_password:
-            raise serializers.ValidationError(
-                {"newPassword": "New password must different from old password."}
-            )
+            raise serializers.ValidationError({"newPassword": "New password must different from old password."})
         password_validation.validate_password(new_password, user)
+
+        return attrs
+
+class UserActiveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["is_active"]
+
+    def validate(self, attrs):
+        request = self.context["request"]
+        if self.instance == request.user:
+            raise serializers.ValidationError("You cannot deactivate your own account.")
 
         return attrs
