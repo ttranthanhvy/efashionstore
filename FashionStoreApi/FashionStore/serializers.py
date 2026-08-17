@@ -21,11 +21,6 @@ class UserSerializer(serializers.ModelSerializer):
         user.save(update_fields=["role"])
         return user
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        if instance.avatar:
-            data["avatar"] = instance.avatar.url
-        return data
 
 
 class LoginSerializer(TokenObtainPairSerializer):
@@ -114,3 +109,12 @@ class UserActiveSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("You cannot deactivate your own account.")
 
         return attrs
+
+class StaffSerializer(UserSerializer):
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        user.role = User.Role.STAFF
+        user.is_approved = True
+        user.save()
+        return user
+   
