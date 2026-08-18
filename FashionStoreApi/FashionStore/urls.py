@@ -10,6 +10,7 @@ router.register("secure/admin/users", views.UserViewSet, basename="user")
 router.register("secure/admin/staffs", views.StaffViewset, basename="staff")
 router.register("category", views.CategoryViewset, basename="category")
 router.register("secure/admin/category", views.AdminCategoryViewset, basename="admin-category")
+router.register("product", views.ProductViewset, basename="product")
 
 urlpatterns = [
     path("", include(router.urls)),

@@ -46,6 +46,7 @@ class Product(BaseModel):
     price = models.DecimalField(max_digits=12, decimal_places=2)
     average_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
     quantity_sold = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 

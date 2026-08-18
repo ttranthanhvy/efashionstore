@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from rest_framework import generics, permissions, parsers, status, viewsets
+from rest_framework import generics, permissions, parsers, status, viewsets, filters
 from rest_framework.decorators import action
-from .models import User, Category
+from .models import User, Category, Product
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from FashionStore import serializers, perms, paginators
@@ -154,6 +154,7 @@ class CategoryViewset(viewsets.ReadOnlyModelViewSet):
             return serializers.CategoryDetailSerializer
         return serializers.CategorySerializer
 
+
 class AdminCategoryViewset(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = serializers.CategorySerializer
@@ -162,9 +163,47 @@ class AdminCategoryViewset(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         category = self.get_object()
-        category.is_active  = False
+        category.is_active = False
         category.save(update_fields=["is_active"])
 
-        return Response({"detail": "Category deteled successfully"}, status=status.HTTP_200_OK)
+        return Response(
+            {"detail": "Category deteled successfully"}, status=status.HTTP_200_OK
+        )
 
-    
+
+class ProductViewset(viewsets.GenericViewSet, generics.ListAPIView, generics.RetrieveAPIView):
+    queryset = Product.objects.filter(is_active=True)
+    serializer_class = serializers.ProductSerializer
+    pagination_class = paginators.ProductPagination
+    permission_classes = [permissions.AllowAny]
+
+    def paginate(self, products):
+        page = self.paginate_queryset(products)
+        if page is not None:
+            serializer = serializers.ProductSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = serializers.ProductSerializer(products, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(methods=["get"], detail=False, url_path="search")
+    def search(self, resquest):
+        q = self.request.query_params.get("q")
+        if not q:
+            return Response(
+                {"detail": "Query parameter 'q' is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        products = self.queryset.filter(name__icontains=q)
+        return self.paginate(products)
+        
+
+    @action(methods=["get"], detail=False, url_path="new")
+    def new_products(self, request):
+        products = self.queryset.order_by("-created_date")
+        return self.paginate(products)
+
+    @action(methods=["get"], detail=False, url_path="popular")
+    def popular_products(self, request):
+        products = self.queryset.order_by("-quantity_sold")
+        return self.paginate(products)

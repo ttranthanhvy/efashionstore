@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from FashionStore.models import User, TokenBlacklist, Category
+from FashionStore.models import User, TokenBlacklist, Category, Product
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.exceptions import TokenError
@@ -152,3 +152,9 @@ class CategoryDetailSerializer(CategorySerializer):
     class Meta:
         model = CategorySerializer.Meta.model
         fields = CategorySerializer.Meta.fields + ["created_date", "updated_date"]
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ["id",  "name", "description", "thumbnail", "price", "average_rating", "quantity_sold"]
+        
