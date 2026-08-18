@@ -29,15 +29,11 @@ class BaseModel(models.Model):
 
 class Category(BaseModel):
     name = models.CharField(max_length=255)
-
+    is_active = models.BooleanField(default=True)
     parent = models.ForeignKey("self", on_delete=models.SET_NULL, null=True)
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["parent", "name"], name="unique_category_name_in_parent"
-            )
-        ]
+        constraints = [models.UniqueConstraint(fields=["parent", "name"], name="unique_category_name_in_parent")]
 
     def __str__(self):
         return self.name

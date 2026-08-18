@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from FashionStore.models import User, TokenBlacklist
+from FashionStore.models import User, TokenBlacklist, Category
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.exceptions import TokenError
@@ -10,7 +10,15 @@ from datetime import datetime, timezone
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "first_name", "last_name", "email", "avatar", "password"]
+        fields = [
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "avatar",
+            "password",
+        ]
         extra_kwargs = {
             "password": {"write_only": True},
         }
@@ -20,7 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
         user.role = User.Role.CUSTOMER
         user.save(update_fields=["role"])
         return user
-
 
 
 class LoginSerializer(TokenObtainPairSerializer):
@@ -87,16 +94,25 @@ class ChangePasswordSerializer(serializers.Serializer):
         new_password = attrs["newPassword"]
 
         if not old_password.strip():
-            raise serializers.ValidationError({"oldPassword": "Old password cannot be empty."})
+            raise serializers.ValidationError(
+                {"oldPassword": "Old password cannot be empty."}
+            )
         if not new_password.strip():
-            raise serializers.ValidationError({"newPassword": "New password cannot be empty."})
+            raise serializers.ValidationError(
+                {"newPassword": "New password cannot be empty."}
+            )
         if not user.check_password(old_password):
-            raise serializers.ValidationError({"oldPassword": "Old password is incorrect."})
+            raise serializers.ValidationError(
+                {"oldPassword": "Old password is incorrect."}
+            )
         if old_password == new_password:
-            raise serializers.ValidationError({"newPassword": "New password must different from old password."})
+            raise serializers.ValidationError(
+                {"newPassword": "New password must different from old password."}
+            )
         password_validation.validate_password(new_password, user)
 
         return attrs
+
 
 class UserActiveSerializer(serializers.ModelSerializer):
     class Meta:
@@ -110,6 +126,7 @@ class UserActiveSerializer(serializers.ModelSerializer):
 
         return attrs
 
+
 class StaffSerializer(UserSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
@@ -117,4 +134,21 @@ class StaffSerializer(UserSerializer):
         user.is_approved = True
         user.save()
         return user
-   
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    parent_id = serializers.PrimaryKeyRelatedField(
+        source="parent",
+        queryset=Category.objects.all(),
+        allow_null=True,
+        required=False,
+    )
+    class Meta:
+        model = Category
+        fields = ["id", "name", "is_active", "parent_id"]
+
+
+class CategoryDetailSerializer(CategorySerializer):
+    class Meta:
+        model = CategorySerializer.Meta.model
+        fields = CategorySerializer.Meta.fields + ["created_date", "updated_date"]

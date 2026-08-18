@@ -8,6 +8,8 @@ router = DefaultRouter()
 router.register("secure", views.ProfileViewSet, basename="profile")
 router.register("secure/admin/users", views.UserViewSet, basename="user")
 router.register("secure/admin/staffs", views.StaffViewset, basename="staff")
+router.register("category", views.CategoryViewset, basename="category")
+router.register("secure/admin/category", views.AdminCategoryViewset, basename="admin-category")
 
 urlpatterns = [
     path("", include(router.urls)),

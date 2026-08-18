@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions, parsers, status, viewsets
 from rest_framework.decorators import action
-from .models import User
+from .models import User, Category
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from FashionStore import serializers, perms, paginators
@@ -134,12 +134,37 @@ class StaffViewset(viewsets.ViewSet):
         try:
             staff = User.objects.get(pk=pk)
         except User.DoesNotExist:
-            return Response({"detail": "Staff not found."}, status=status.HTTP_404_NOT_FOUND)
-        serializer = serializers.UserActiveSerializer(staff, data=request.data, partial=True, context={"request": request})
+            return Response(
+                {"detail": "Staff not found."}, status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = serializers.UserActiveSerializer(
+            staff, data=request.data, partial=True, context={"request": request}
+        )
         staff.is_approved = False
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class CategoryViewset(viewsets.ReadOnlyModelViewSet):
+    queryset = Category.objects.filter(is_active=True)
 
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return serializers.CategoryDetailSerializer
+        return serializers.CategorySerializer
+
+class AdminCategoryViewset(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = serializers.CategorySerializer
+    permission_classes = [perms.Isadmin]
+    http_method_names = ["post", "patch", "delete"]
+
+    def destroy(self, request, *args, **kwargs):
+        category = self.get_object()
+        category.is_active  = False
+        category.save(update_fields=["is_active"])
+
+        return Response({"detail": "Category deteled successfully"}, status=status.HTTP_200_OK)
+
+    
