@@ -1,20 +1,25 @@
 from rest_framework.permissions import BasePermission
+from .models import User
+
 
 class Isadmin(BasePermission):
     def has_permission(self, request, view):
-        return (request.user.is_authenticated and request.user.role == "ADMIN")
+        return request.user.is_authenticated and request.user.role == "ADMIN"
 
-class IsStaff(BasePermission): 
+
+class IsStaff(BasePermission):
     def has_permission(self, request, view):
-        return (request.user.is_authenticated and request.user.role == "STAFF")
+        return request.user.is_authenticated and request.user.role == "STAFF"
 
-class IsCustomer():
+
+class IsCustomer:
     def has_permission(self, request, view):
-        return (request.user.is_authenticated and request.user.role == "CUSTOMER")
+        return request.user.is_authenticated and request.user.role == "CUSTOMER"
 
 
-class IsAdminOrCustomer():
+class IsAdminOrStaff:
     def has_permission(self, request, view):
-        return (request.user.is_authenticated and request.user.role in ["ADMIN", "STAFF"])
-    
-  
+        return request.user.is_authenticated and request.user.role in ["ADMIN", "STAFF"]
+
+    def has_object_permission(self, request, view, obj):
+        return request.user.is_authenticated and request.user.role in [User.Role.ADMIN, User.Role.STAFF]

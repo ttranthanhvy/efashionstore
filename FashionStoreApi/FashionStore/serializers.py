@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from FashionStore.models import User, TokenBlacklist, Category, Product
+from FashionStore.models import User, TokenBlacklist, Category, Product, ProductVariant
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.exceptions import TokenError
@@ -10,15 +10,7 @@ from datetime import datetime, timezone
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = [
-            "id",
-            "username",
-            "first_name",
-            "last_name",
-            "email",
-            "avatar",
-            "password",
-        ]
+        fields = [ "id", "username", "first_name", "last_name", "email", "avatar", "password"]
         extra_kwargs = {
             "password": {"write_only": True},
         }
@@ -29,7 +21,6 @@ class UserSerializer(serializers.ModelSerializer):
         user.save(update_fields=["role"])
         return user
 
-
 class LoginSerializer(TokenObtainPairSerializer):
     username = serializers.CharField(required=True, allow_blank=False)
     password = serializers.CharField(required=True, allow_blank=False, write_only=True)
@@ -39,14 +30,14 @@ class LoginSerializer(TokenObtainPairSerializer):
         user = self.user
         if user.role == user.Role.STAFF and not user.is_approved:
             raise serializers.ValidationError("Your account is not approved.")
-
+        if not user.check_password(password):
+            raise serializers.ValidationError({"detail": "Wrong password"})
         data["user"] = {
             "id": user.id,
             "username": user.username,
             "role": user.role,
         }
         return data
-
 
 class LogoutSerializer(serializers.Serializer):
     access = serializers.CharField()
@@ -71,7 +62,6 @@ class LogoutSerializer(serializers.Serializer):
 
         return attrs
 
-
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -82,7 +72,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         if value.size > 5 * 1024 * 1024:
             raise serializers.ValidationError("Avatar size must not exceed 5MB.")
         return value
-
 
 class ChangePasswordSerializer(serializers.Serializer):
     oldPassword = serializers.CharField(write_only=True, required=True)
@@ -113,7 +102,6 @@ class ChangePasswordSerializer(serializers.Serializer):
 
         return attrs
 
-
 class UserActiveSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -126,7 +114,6 @@ class UserActiveSerializer(serializers.ModelSerializer):
 
         return attrs
 
-
 class StaffSerializer(UserSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
@@ -135,7 +122,6 @@ class StaffSerializer(UserSerializer):
         user.save()
         return user
 
-
 class CategorySerializer(serializers.ModelSerializer):
     parent_id = serializers.PrimaryKeyRelatedField(
         source="parent",
@@ -143,10 +129,10 @@ class CategorySerializer(serializers.ModelSerializer):
         allow_null=True,
         required=False,
     )
+
     class Meta:
         model = Category
         fields = ["id", "name", "is_active", "parent_id"]
-
 
 class CategoryDetailSerializer(CategorySerializer):
     class Meta:
@@ -156,5 +142,9 @@ class CategoryDetailSerializer(CategorySerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ["id",  "name", "description", "thumbnail", "price", "average_rating", "quantity_sold"]
-        
+        fields = [ "id", "category", "name", "description", "thumbnail", "price", "average_rating", "quantity_sold"]
+
+class VariantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductVariant
+        fields = ["id", "image", "size", "color", "price", "stock"]

@@ -48,15 +48,17 @@ class Product(BaseModel):
     quantity_sold = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
 
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
 
 
 class ProductVariant(models.Model):
     image = CloudinaryField()
-    size = models.CharField(max_length=20, blank=True, null=True)
+    size = models.CharField(max_length=100, blank=True, null=True)
     price = models.DecimalField(max_digits=12, decimal_places=2)
     color = models.CharField(max_length=20, blank=True, null=True)
+    min_stock = models.IntegerField()
     stock = models.IntegerField()
+    is_active = models.BooleanField(default=True)
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 

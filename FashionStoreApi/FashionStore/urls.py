@@ -11,6 +11,10 @@ router.register("secure/admin/staffs", views.StaffViewset, basename="staff")
 router.register("category", views.CategoryViewset, basename="category")
 router.register("secure/admin/category", views.AdminCategoryViewset, basename="admin-category")
 router.register("product", views.ProductViewset, basename="product")
+router.register("secure/staff/product", views.StaffProductViewset, basename="staff-product")
+router.register("variant", views.VariantViewset, basename="variant")
+router.register("secure/staff/variant", views.StaffVariantViewset, basename="satff-variant")
+
 
 urlpatterns = [
     path("", include(router.urls)),

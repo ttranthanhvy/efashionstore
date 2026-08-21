@@ -6,14 +6,12 @@ from FashionStore.models import Category
 
 class Command(BaseCommand):
     help = "Import categories from CSV"
-
+ 
     def add_arguments(self, parser):
         parser.add_argument(
             "csv_file",
             type=str,
         )
-
-    
 
     def handle(self, *args, **options):
         csv_file = options["csv_file"]
