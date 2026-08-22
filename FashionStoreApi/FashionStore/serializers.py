@@ -1,5 +1,13 @@
 from rest_framework import serializers
-from FashionStore.models import User, TokenBlacklist, Category, Product, ProductVariant
+from FashionStore.models import (
+    User,
+    TokenBlacklist,
+    Category,
+    Product,
+    ProductVariant,
+    Cart,
+    CartItem,
+)
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.exceptions import TokenError
@@ -10,7 +18,15 @@ from datetime import datetime, timezone
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = [ "id", "username", "first_name", "last_name", "email", "avatar", "password"]
+        fields = [
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "avatar",
+            "password",
+        ]
         extra_kwargs = {
             "password": {"write_only": True},
         }
@@ -21,6 +37,7 @@ class UserSerializer(serializers.ModelSerializer):
         user.save(update_fields=["role"])
         return user
 
+
 class LoginSerializer(TokenObtainPairSerializer):
     username = serializers.CharField(required=True, allow_blank=False)
     password = serializers.CharField(required=True, allow_blank=False, write_only=True)
@@ -29,15 +46,14 @@ class LoginSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         user = self.user
         if user.role == user.Role.STAFF and not user.is_approved:
-            raise serializers.ValidationError("Your account is not approved.")
-        if not user.check_password(password):
-            raise serializers.ValidationError({"detail": "Wrong password"})
+            raise serializers.ValidationError({"detail": "Your account is not approved."})
         data["user"] = {
             "id": user.id,
             "username": user.username,
             "role": user.role,
         }
         return data
+
 
 class LogoutSerializer(serializers.Serializer):
     access = serializers.CharField()
@@ -62,6 +78,7 @@ class LogoutSerializer(serializers.Serializer):
 
         return attrs
 
+
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -72,6 +89,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         if value.size > 5 * 1024 * 1024:
             raise serializers.ValidationError("Avatar size must not exceed 5MB.")
         return value
+
 
 class ChangePasswordSerializer(serializers.Serializer):
     oldPassword = serializers.CharField(write_only=True, required=True)
@@ -102,6 +120,7 @@ class ChangePasswordSerializer(serializers.Serializer):
 
         return attrs
 
+
 class UserActiveSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -114,6 +133,7 @@ class UserActiveSerializer(serializers.ModelSerializer):
 
         return attrs
 
+
 class StaffSerializer(UserSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
@@ -121,6 +141,7 @@ class StaffSerializer(UserSerializer):
         user.is_approved = True
         user.save()
         return user
+
 
 class CategorySerializer(serializers.ModelSerializer):
     parent_id = serializers.PrimaryKeyRelatedField(
@@ -134,17 +155,43 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ["id", "name", "is_active", "parent_id"]
 
+
 class CategoryDetailSerializer(CategorySerializer):
     class Meta:
         model = CategorySerializer.Meta.model
         fields = CategorySerializer.Meta.fields + ["created_date", "updated_date"]
 
+
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = [ "id", "category", "name", "description", "thumbnail", "price", "average_rating", "quantity_sold"]
+        fields = [
+            "id",
+            "category",
+            "name",
+            "description",
+            "thumbnail",
+            "price",
+            "average_rating",
+            "quantity_sold",
+        ]
+
 
 class VariantSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductVariant
-        fields = ["id", "image", "size", "color", "price", "stock"]
+        fields = ["id", "image", "size", "color", "price", "stock", "min_stock"]
+
+
+class CartItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CartItem
+        fields = ["id", "quantity", "created_date", "product_variant"]
+
+
+class CartSerializer(serializers.ModelSerializer):
+    items = CartItemSerializer(source="cartitem_set", many=True)
+
+    class Meta:
+        model = Cart
+        fields = ["id", "items"]

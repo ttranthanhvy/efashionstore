@@ -97,16 +97,11 @@ class Cart(models.Model):
 class CartItem(models.Model):
     quantity = models.IntegerField()
     created_date = models.DateTimeField(auto_now_add=True)
-
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product_variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE)
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["cart", "product_variant"], name="unique_cart_product"
-            )
-        ]
+        constraints = [models.UniqueConstraint(fields=["cart", "product_variant"], name="unique_cart_product")]
 
 
 class Payment(models.Model):
