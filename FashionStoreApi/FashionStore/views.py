@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions, parsers, status, viewsets, filters
 from rest_framework.decorators import action
-from .models import User, Category, Product, ProductVariant
+from .models import User, Category, Product, ProductVariant, Cart, CartItem
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from FashionStore import serializers, perms, paginators
@@ -263,14 +263,20 @@ class StaffVariantViewset(viewsets.ModelViewSet):
     queryset = ProductVariant.objects.all()
     serializer_class = serializers.VariantSerializer
     permission_classes = [perms.IsAdminOrStaff]
-    http_method_names = ["get","patch", "delete"]
+    http_method_names = ["get", "patch", "delete"]
 
     def partial_update(self, request, *args, **kwargs):
         variant = self.get_object()
         color = request.data.get("color", variant.color)
         size = request.data.get("size", variant.size)
 
-        if (ProductVariant.objects.filter(product=variant.product, color=color, size=size).exclude(id=variant.id).exists()):
+        if (
+            ProductVariant.objects.filter(
+                product=variant.product, color=color, size=size
+            )
+            .exclude(id=variant.id)
+            .exists()
+        ):
             return Response(
                 {"detail": "Another variant with this color and size already exists."},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -363,3 +369,61 @@ class CartViewSet(viewsets.ViewSet):
         serializer = serializers.CartItemSerializer(cart_item)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(methods=["delete"], detail=True, url_path="clear")
+    def clear_cart(self, request, pk=None):
+        cart = Cart.objects.get(id=pk, user=request.user)
+
+        CartItem.objects.filter(cart=cart).delete()
+
+        return Response(
+            {"detail": "Cart cleared successfully."}, status=status.HTTP_204_NO_CONTENT
+        )
+
+
+class CartItemviewset(viewsets.ModelViewSet):
+    serializer_class = serializers.CartItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    http_method_names = ["patch", "delete"]
+
+    def get_queryset(self):
+        return CartItem.objects.filter(cart__user=self.request.user)
+
+    def partial_update(self, request, pk=None):
+        cart = Cart.objects.get(user=request.user)
+        cart_item = CartItem.objects.get(id=pk, cart=cart)
+
+        quantity = int(request.data.get("quantity"))
+        variant_id = request.data.get("product_variant")
+
+        if variant_id:
+            variant = ProductVariant.objects.get(id=variant_id)
+
+            if quantity > variant.stock:
+                return Response(
+                    {"detail": "Quantity is out of stock."},
+                    status=status.HTTP_409_CONFLICT,
+                )
+
+            cart_item.product_variant = variant
+
+        else:
+            if quantity > cart_item.product_variant.stock:
+                return Response(
+                    {"detail": "Quantity is out of stock."},
+                    status=status.HTTP_409_CONFLICT,
+                )
+
+        cart_item.quantity = quantity
+        cart_item.save()
+
+        return Response(
+            {
+                "id": cart_item.id,
+                "product_variant": cart_item.product_variant.id,
+                "quantity": cart_item.quantity,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+   

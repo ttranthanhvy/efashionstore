@@ -34,6 +34,7 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         user.role = User.Role.CUSTOMER
+        Cart.objects.create(user=user)
         user.save(update_fields=["role"])
         return user
 
@@ -184,9 +185,11 @@ class VariantSerializer(serializers.ModelSerializer):
 
 
 class CartItemSerializer(serializers.ModelSerializer):
+    thumbnail = serializers.CharField(source="product_variant.product.thumbnail.url",read_only=True)
     class Meta:
         model = CartItem
-        fields = ["id", "quantity", "created_date", "product_variant"]
+        fields = ["id", "quantity", "created_date", "product_variant", "thumbnail"]
+
 
 
 class CartSerializer(serializers.ModelSerializer):

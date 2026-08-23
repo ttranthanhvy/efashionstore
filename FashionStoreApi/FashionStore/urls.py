@@ -14,6 +14,9 @@ router.register("product", views.ProductViewset, basename="product")
 router.register("secure/staff/product", views.StaffProductViewset, basename="staff-product")
 router.register("variant", views.VariantViewset, basename="variant")
 router.register("secure/staff/variant", views.StaffVariantViewset, basename="satff-variant")
+router.register("secure/cart", views.CartViewSet, basename="cart")
+router.register("secure/cart/items", views.CartItemviewset, basename="cart-item")
+
 
 
 urlpatterns = [
