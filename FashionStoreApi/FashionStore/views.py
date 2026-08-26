@@ -1,11 +1,22 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions, parsers, status, viewsets, filters
 from rest_framework.decorators import action
-from .models import User, Category, Product, ProductVariant, Cart, CartItem
+from .models import (
+    User,
+    Category,
+    Product,
+    ProductVariant,
+    Cart,
+    CartItem,
+    Rating,
+    Order,
+    OrderDetail,
+    Payment,
+)
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
-from FashionStore import serializers, perms, paginators
-from django.db import models
+from FashionStore import serializers, perms, paginators, services
+from django.db import models, transaction
 
 
 # Create your views here.
@@ -218,11 +229,80 @@ class ProductViewset(
 
         return Response(serializer.data)
 
+    @action(methods=["get"], detail=True, url_path="ratings")
+    def ratings(self, request, pk):
+        ratings = (
+            self.get_object()
+            .rating_set.select_related("user")
+            .all()
+            .order_by("-created_date")
+        )
+
+        p = paginators.RatingPagination()
+        page = p.paginate_queryset(ratings, request)
+
+        if page is not None:
+            serializer = serializers.RatingSerializer(page, many=True)
+            return p.get_paginated_response(serializer.data)
+
+        return Response(
+            serializers.RatingSerializer(ratings, many=True).data,
+            status=status.HTTP_200_OK,
+        )
+
 
 class VariantViewset(viewsets.ViewSet, generics.RetrieveAPIView):
     queryset = ProductVariant.objects.filter(is_active=True)
     serializer_class = serializers.VariantSerializer
     permission_classes = [permissions.AllowAny]
+
+    @action(
+        detail=True,
+        methods=["post"],
+        url_path="orders",
+        permission_classes=[perms.IsCustomer],
+    )
+    @transaction.atomic
+    def create_order(self, request, pk=None):
+
+        serializer = serializers.CreateOrderFromCartItemSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        quantity = serializer.validated_data["quantity"]
+        shipping_address = serializer.validated_data["shipping_address"]
+        payment_method = serializer.validated_data["payment_method"]
+
+        try:
+            variant = ProductVariant.objects.select_related("product").get(pk=pk)
+        except ProductVariant.DoesNotExist:
+            return Response(
+                {"detail": "Product variant not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        try:
+            order = services.create_order(
+                user=request.user,
+                variant=variant,
+                quantity=quantity,
+                shipping_address=shipping_address,
+                payment_method=payment_method,
+            )
+        except ValueError as e:
+            return Response(
+                {"detail": str(e)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        return Response(
+            {
+                "message": "Order created successfully.",
+                "order_id": order.id,
+                "total_amount": order.total_amount,
+                "status": order.status,
+            },
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class StaffProductViewset(viewsets.ModelViewSet):
@@ -392,31 +472,25 @@ class CartItemviewset(viewsets.ModelViewSet):
     def partial_update(self, request, pk=None):
         cart = Cart.objects.get(user=request.user)
         cart_item = CartItem.objects.get(id=pk, cart=cart)
-
         quantity = int(request.data.get("quantity"))
         variant_id = request.data.get("product_variant")
 
         if variant_id:
             variant = ProductVariant.objects.get(id=variant_id)
-
             if quantity > variant.stock:
                 return Response(
                     {"detail": "Quantity is out of stock."},
                     status=status.HTTP_409_CONFLICT,
                 )
-
             cart_item.product_variant = variant
-
         else:
             if quantity > cart_item.product_variant.stock:
                 return Response(
                     {"detail": "Quantity is out of stock."},
                     status=status.HTTP_409_CONFLICT,
                 )
-
         cart_item.quantity = quantity
         cart_item.save()
-
         return Response(
             {
                 "id": cart_item.id,
@@ -426,4 +500,285 @@ class CartItemviewset(viewsets.ModelViewSet):
             status=status.HTTP_200_OK,
         )
 
-   
+
+class RatingViewSet(viewsets.ViewSet, generics.DestroyAPIView):
+    queryset = Rating.objects.all()
+    serializer_class = serializers.RatingSerializer
+    permission_classes = [perms.RatingtOwner]
+    http_method_names = ["post", "patch", "delete"]
+
+    def create(self, request):
+        data = {
+            "rate": request.data.get("rate"),
+            "title": request.data.get("title"),
+            "comment": request.data.get("comment"),
+            "user": request.user.pk,
+            "product": request.data.get("product"),
+        }
+
+        serializer = serializers.RatingSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        product = serializer.validated_data["product"]
+        if Rating.objects.filter(user=request.user, product=product).exists():
+            return Response(
+                {"detail": "You're already rating this product."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        rating = serializer.save(user=request.user)
+
+        return Response(
+            serializers.RatingSerializer(rating).data, status=status.HTTP_201_CREATED
+        )
+
+    def partial_update(self, request, pk=None):
+        rating = Rating.objects.get(pk=pk)
+        self.check_object_permissions(request, rating)
+        serializer = serializers.RatingSerializer(
+            rating, data=request.data, partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+        rating = serializer.save()
+
+        return Response(
+            serializers.RatingSerializer(rating).data, status=status.HTTP_200_OK
+        )
+
+
+class OrderViewSet(viewsets.ViewSet):
+    permission_classes = [perms.IsCustomer]
+
+    def list(self, request):
+        orders = Order.objects.filter(user=request.user).order_by("-created_date")
+        order_status = request.query_params.get("status")
+
+        if order_status == "UNCOMPLETED":
+            orders = orders.exclude(
+                status__in=[Order.Status.COMPLETED, Order.Status.CANCELLED]
+            )
+        elif order_status:
+            if order_status not in Order.Status.values:
+                return Response(
+                    {"detail": "Invalid order status."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            orders = orders.filter(status=order_status)
+
+        return Response(serializers.OrderSerializer(orders, many=True).data)
+
+    def retrieve(self, request, pk=None):
+        order = Order.objects.filter(id=pk, user=request.user).first()
+
+        if not order:
+            return Response(
+                {"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND
+            )
+
+        return Response(serializers.OrderSerializer(order).data)
+
+    @action(methods=["patch"], detail=True, url_path="cancel")
+    @transaction.atomic
+    def cancel(self, request, pk=None):
+        order = Order.objects.filter(id=pk, user=request.user).first()
+        if not order:
+            return Response(
+                {"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND
+            )
+        if order.status != Order.Status.PENDING:
+            return Response(
+                {"detail": "Only pending orders can be cancelled."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        order.status = Order.Status.CANCELLED
+        order.save(update_fields=["status"])
+
+        return Response(serializers.OrderSerializer(order).data, status=status.HTTP_200_OK)
+
+
+class CreateOrderFromCartItemView(generics.CreateAPIView):
+    permission_classes = [perms.IsCustomer]
+    serializer_class = serializers.CreateOrderFromCartItemSerializer
+
+    @transaction.atomic
+    def create(self, request, *args, **kwargs):
+        cart_item_id = kwargs.get("cart_item_id")
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        shipping_address = serializer.validated_data["shipping_address"]
+        payment_method = serializer.validated_data["payment_method"]
+
+        try:
+            cart_item = CartItem.objects.select_related(
+                "product_variant", "product_variant__product"
+            ).get(id=cart_item_id, cart__user=request.user)
+        except CartItem.DoesNotExist:
+            return Response(
+                {"detail": "Cart item not found."}, status=status.HTTP_404_NOT_FOUND
+            )
+
+        try:
+            order = services.create_order(
+                user=request.user,
+                variant=cart_item.product_variant,
+                quantity=cart_item.quantity,
+                shipping_address=shipping_address,
+                payment_method=payment_method,
+            )
+        except ValueError as e:
+            return Response(
+                {"detail": str(e)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        cart_item.delete()
+
+        return Response(
+            {
+                "message": "Order created successfully.",
+                "order_id": order.id,
+                "total_amount": total_amount,
+                "status": order.status,
+            },
+            status=status.HTTP_201_CREATED,
+        )
+
+
+##############3STAFF check lai logic
+class StaffOrderViewSet(viewsets.ViewSet):
+    permission_classes = [perms.IsStaff]
+
+    def list(self, request):
+        if not self.check_staff(request):
+            return Response(
+                {"detail": "Only STAFF can access orders."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        orders = Order.objects.all().order_by("-created_date")
+
+        order_status = request.query_params.get("status")
+
+        if order_status:
+            if order_status not in Order.Status.values:
+                return Response(
+                    {"detail": "Invalid status."}, status=status.HTTP_400_BAD_REQUEST
+                )
+
+            orders = orders.filter(status=order_status)
+
+        return Response(
+            OrderSerializer(orders, many=True).data, status=status.HTTP_200_OK
+        )
+
+    def retrieve(self, request, pk=None):
+        if not self.check_staff(request):
+            return Response(
+                {"detail": "Only STAFF can access orders."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        order = Order.objects.filter(id=pk).first()
+
+        if not order:
+            return Response(
+                {"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND
+            )
+
+        return Response(OrderSerializer(order).data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=["patch"], url_path="confirm")
+    def confirm(self, request, pk=None):
+        if not self.check_staff(request):
+            return Response(
+                {"detail": "Only STAFF can confirm orders."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        order = Order.objects.filter(id=pk).first()
+
+        if not order:
+            return Response(
+                {"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND
+            )
+
+        if order.status != Order.Status.PENDING:
+            return Response(
+                {"detail": "Only PENDING orders can be confirmed."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        for detail in OrderDetail.objects.filter(order=order):
+            variant = detail.product_variant
+
+            if variant.stock < 0:
+                return Response(
+                    {"detail": "Stock conflict."}, status=status.HTTP_409_CONFLICT
+                )
+
+        order.status = Order.Status.CONFIRMED
+        order.save(update_fields=["status"])
+
+        return Response(OrderSerializer(order).data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=["patch"], url_path="status")
+    def update_status(self, request, pk=None):
+        if not self.check_staff(request):
+            return Response(
+                {"detail": "Only STAFF can update order status."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        order = Order.objects.filter(id=pk).first()
+
+        if not order:
+            return Response(
+                {"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND
+            )
+
+        if order.status == Order.Status.CANCELLED:
+            return Response(
+                {"detail": "Cancelled order cannot be changed."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        new_status = request.data.get("status")
+
+        if new_status not in Order.Status.values:
+            return Response(
+                {"detail": "Invalid status."}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        allowed_transitions = {
+            Order.Status.PENDING: [
+                Order.Status.CONFIRMED,
+                Order.Status.CANCELLED,
+            ],
+            Order.Status.CONFIRMED: [
+                Order.Status.SHIPPED,
+                Order.Status.CANCELLED,
+            ],
+            Order.Status.SHIPPED: [
+                Order.Status.COMPLETED,
+            ],
+            Order.Status.COMPLETED: [],
+            Order.Status.CANCELLED: [],
+        }
+
+        if new_status not in allowed_transitions[order.status]:
+            return Response(
+                {
+                    "detail": (
+                        f"Cannot change status from " f"{order.status} to {new_status}."
+                    )
+                },
+                status=status.HTTP_409_CONFLICT,
+            )
+
+        order.status = new_status
+        order.save(update_fields=["status"])
+
+        return Response(OrderSerializer(order).data, status=status.HTTP_200_OK)

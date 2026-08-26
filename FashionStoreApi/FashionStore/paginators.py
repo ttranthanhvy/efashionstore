@@ -5,3 +5,6 @@ class UserPagination(pagination.PageNumberPagination):
     
 class ProductPagination(pagination.PageNumberPagination):
     page_size = 20
+
+class RatingPagination(pagination.PageNumberPagination):
+    page_size = 10

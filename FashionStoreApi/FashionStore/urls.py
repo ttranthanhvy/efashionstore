@@ -16,6 +16,10 @@ router.register("variant", views.VariantViewset, basename="variant")
 router.register("secure/staff/variant", views.StaffVariantViewset, basename="satff-variant")
 router.register("secure/cart", views.CartViewSet, basename="cart")
 router.register("secure/cart/items", views.CartItemviewset, basename="cart-item")
+router.register("secure/ratings", views.RatingViewSet, basename="rating")
+router.register("secure/orders", views.OrderViewSet, basename="order")
+router.register("secure/staff/orders", views.OrderViewSet, basename="staff-order")
+
 
 
 
@@ -25,5 +29,6 @@ urlpatterns = [
     path("auth/login/", views.LoginView.as_view(), name="login"),
     path("auth/refresh/", TokenRefreshView.as_view(), name="refresh"),
     path("auth/logout/", views.LogoutView.as_view(), name="logout"),
+    path("secure/orders/cart/item/<int:cart_item_id>",views.CreateOrderFromCartItemView.as_view(),name="create-order-from-cart-item"),
 
 ]

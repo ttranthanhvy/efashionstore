@@ -84,7 +84,7 @@ class Order(models.Model):
 
 class OrderDetail(models.Model):
     unit_price = models.DecimalField(max_digits=12, decimal_places=2)
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(validators=[MinValueValidator(1)])
 
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product_variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE)
@@ -95,7 +95,7 @@ class Cart(models.Model):
 
 
 class CartItem(models.Model):
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(validators=[MinValueValidator(1)])
     created_date = models.DateTimeField(auto_now_add=True)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product_variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE)
@@ -126,10 +126,14 @@ class Payment(models.Model):
         Order, on_delete=models.CASCADE, related_name="payment"
     )
 
+class OrderHistory(models.Model):
+    
+    status = models.CharField(max_length=20)
+    changed_date = models.DateTimeField(auto_now_add=True)
+    order = models.ForeignKey(Order,on_delete=models.CASCADE,related_name="histories")
 
 class Rating(BaseModel):
     rate = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    title = models.CharField(max_length=20)
     comment = models.TextField(max_length=500, null=True, blank=True)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -151,3 +155,4 @@ class TokenBlacklist(models.Model):
 
     def __str__(self):
         return self.jti
+

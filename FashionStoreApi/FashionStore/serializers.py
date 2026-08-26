@@ -7,6 +7,10 @@ from FashionStore.models import (
     ProductVariant,
     Cart,
     CartItem,
+    Rating,
+    Order,
+    OrderDetail,
+    Payment
 )
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
@@ -47,7 +51,9 @@ class LoginSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         user = self.user
         if user.role == user.Role.STAFF and not user.is_approved:
-            raise serializers.ValidationError({"detail": "Your account is not approved."})
+            raise serializers.ValidationError(
+                {"detail": "Your account is not approved."}
+            )
         data["user"] = {
             "id": user.id,
             "username": user.username,
@@ -185,11 +191,13 @@ class VariantSerializer(serializers.ModelSerializer):
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    thumbnail = serializers.CharField(source="product_variant.product.thumbnail.url",read_only=True)
+    thumbnail = serializers.CharField(
+        source="product_variant.product.thumbnail.url", read_only=True
+    )
+
     class Meta:
         model = CartItem
         fields = ["id", "quantity", "created_date", "product_variant", "thumbnail"]
-
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -198,3 +206,77 @@ class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = ["id", "items"]
+
+
+class RatingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Rating
+        fields = ["rate", "comment", "created_date", "updated_date", "product"]
+
+
+from rest_framework import serializers
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    shipping_address = serializers.CharField(required=True, allow_blank=False)
+    payment_method = serializers.CharField(
+        source="payment.method",
+        read_only=True
+    )
+    payment_status = serializers.CharField(
+        source="payment.status",
+        read_only=True
+    )
+
+    class Meta:
+        model = Order
+        fields = [
+            "id",
+            "shipping_address",
+            "payment_method",
+            "payment_status",
+            "total_amount",
+            "status",
+            "created_date",
+
+        ]
+        read_only_fields = ["id", "total_amount", "status", "created_date"]
+
+
+
+class OrderDetailSerializer(serializers.ModelSerializer):
+    product_name = serializers.CharField(source="product_variant.product.name", read_only=True)
+    image = serializers.CharField(source="product_variant.image.url", read_only=True)
+    size = serializers.CharField(source="product_variant.size", read_only=True)
+    color = serializers.CharField(source="product_variant.color", read_only=True)
+
+    class Meta:
+        model = OrderDetail
+        fields = [
+            "id",
+            "product_name",
+            "image",
+            "size",
+            "color",
+            "unit_price",
+            "quantity",
+        ]
+
+
+class CreateOrderFromCartItemSerializer(serializers.Serializer):
+    shipping_address = serializers.CharField(
+        max_length=500,
+        allow_blank=False
+    )
+    payment_method = serializers.ChoiceField(
+        choices=Payment.Method.choices
+    )
+    quantity = serializers.IntegerField(min_value=1)
+
+    def validate_shipping_address(self, value):
+        if not value.strip():
+            raise serializers.ValidationError(
+                "Shipping address is required."
+            )
+        return value.strip()
