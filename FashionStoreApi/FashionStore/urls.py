@@ -18,7 +18,8 @@ router.register("secure/cart", views.CartViewSet, basename="cart")
 router.register("secure/cart/items", views.CartItemviewset, basename="cart-item")
 router.register("secure/ratings", views.RatingViewSet, basename="rating")
 router.register("secure/orders", views.OrderViewSet, basename="order")
-router.register("secure/staff/orders", views.OrderViewSet, basename="staff-order")
+router.register("secure/staff/orders", views.StaffOrderViewSet, basename="staff-order")
+router.register("secure/admin/dashboard", views.AdminDashboardViewSet, basename="dasboard")
 
 
 

@@ -17,6 +17,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from FashionStore import serializers, perms, paginators, services
 from django.db import models, transaction
+from django.db.models import Sum, Count, F
+from django.db.models.functions import TruncMonth, TruncQuarter, TruncYear
 
 
 # Create your views here.
@@ -590,11 +592,22 @@ class OrderViewSet(viewsets.ViewSet):
                 {"detail": "Only pending orders can be cancelled."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        with transaction.atomic():
+            details = OrderDetail.objects.filter(
+                order=order
+            ).select_related("product_variant")
+
+            for detail in details:
+                variant = detail.product_variant
+                variant.stock += detail.quantity
+                variant.save(update_fields=["stock"])
 
         order.status = Order.Status.CANCELLED
         order.save(update_fields=["status"])
 
-        return Response(serializers.OrderSerializer(order).data, status=status.HTTP_200_OK)
+        return Response(
+            serializers.OrderSerializer(order).data, status=status.HTTP_200_OK
+        )
 
 
 class CreateOrderFromCartItemView(generics.CreateAPIView):
@@ -646,20 +659,11 @@ class CreateOrderFromCartItemView(generics.CreateAPIView):
             status=status.HTTP_201_CREATED,
         )
 
-
-##############3STAFF check lai logic
 class StaffOrderViewSet(viewsets.ViewSet):
     permission_classes = [perms.IsStaff]
 
     def list(self, request):
-        if not self.check_staff(request):
-            return Response(
-                {"detail": "Only STAFF can access orders."},
-                status=status.HTTP_403_FORBIDDEN,
-            )
-
         orders = Order.objects.all().order_by("-created_date")
-
         order_status = request.query_params.get("status")
 
         if order_status:
@@ -671,69 +675,38 @@ class StaffOrderViewSet(viewsets.ViewSet):
             orders = orders.filter(status=order_status)
 
         return Response(
-            OrderSerializer(orders, many=True).data, status=status.HTTP_200_OK
+            serializers.OrderSerializer(orders, many=True).data, status=status.HTTP_200_OK
         )
 
     def retrieve(self, request, pk=None):
-        if not self.check_staff(request):
-            return Response(
-                {"detail": "Only STAFF can access orders."},
-                status=status.HTTP_403_FORBIDDEN,
-            )
-
         order = Order.objects.filter(id=pk).first()
-
         if not order:
             return Response(
                 {"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND
             )
 
-        return Response(OrderSerializer(order).data, status=status.HTTP_200_OK)
+        return Response(serializers.OrderSerializer(order).data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=["patch"], url_path="confirm")
     def confirm(self, request, pk=None):
-        if not self.check_staff(request):
-            return Response(
-                {"detail": "Only STAFF can confirm orders."},
-                status=status.HTTP_403_FORBIDDEN,
-            )
-
         order = Order.objects.filter(id=pk).first()
-
         if not order:
             return Response(
                 {"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND
             )
-
         if order.status != Order.Status.PENDING:
             return Response(
                 {"detail": "Only PENDING orders can be confirmed."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-
-        for detail in OrderDetail.objects.filter(order=order):
-            variant = detail.product_variant
-
-            if variant.stock < 0:
-                return Response(
-                    {"detail": "Stock conflict."}, status=status.HTTP_409_CONFLICT
-                )
-
         order.status = Order.Status.CONFIRMED
         order.save(update_fields=["status"])
 
-        return Response(OrderSerializer(order).data, status=status.HTTP_200_OK)
+        return Response(serializers.OrderSerializer(order).data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=["patch"], url_path="status")
     def update_status(self, request, pk=None):
-        if not self.check_staff(request):
-            return Response(
-                {"detail": "Only STAFF can update order status."},
-                status=status.HTTP_403_FORBIDDEN,
-            )
-
         order = Order.objects.filter(id=pk).first()
-
         if not order:
             return Response(
                 {"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND
@@ -753,17 +726,9 @@ class StaffOrderViewSet(viewsets.ViewSet):
             )
 
         allowed_transitions = {
-            Order.Status.PENDING: [
-                Order.Status.CONFIRMED,
-                Order.Status.CANCELLED,
-            ],
-            Order.Status.CONFIRMED: [
-                Order.Status.SHIPPED,
-                Order.Status.CANCELLED,
-            ],
-            Order.Status.SHIPPED: [
-                Order.Status.COMPLETED,
-            ],
+            Order.Status.PENDING: [Order.Status.CONFIRMED, Order.Status.CANCELLED],
+            Order.Status.CONFIRMED: [Order.Status.SHIPPED, Order.Status.CANCELLED],
+            Order.Status.SHIPPED: [Order.Status.COMPLETED],
             Order.Status.COMPLETED: [],
             Order.Status.CANCELLED: [],
         }
@@ -781,4 +746,153 @@ class StaffOrderViewSet(viewsets.ViewSet):
         order.status = new_status
         order.save(update_fields=["status"])
 
-        return Response(OrderSerializer(order).data, status=status.HTTP_200_OK)
+        return Response(serializers.OrderSerializer(order).data, status=status.HTTP_200_OK)
+
+
+class AdminDashboardViewSet(viewsets.ViewSet):
+
+    permission_classes = [perms.Isadmin]
+
+    def filter_orders_by_date(self, orders, data):
+        date_from = data.get("date_from")
+        date_to = data.get("date_to")
+        if date_from:
+            orders = orders.filter(created_date__date__gte=date_from)
+        if date_to:
+            orders = orders.filter(created_date__date__lte=date_to)
+
+        return orders
+
+    def valid_orders(self):
+        return Order.objects.exclude(status=Order.Status.CANCELLED)
+
+    @action(methods=["get"], detail=False, url_path="revenue")
+    def revenue(self, request):
+
+        serializer = serializers.DashboardRevenueSerializer(data=request.query_params)
+
+        serializer.is_valid(raise_exception=True)
+
+        data = serializer.validated_data
+        period = data["period"]
+
+        orders = self.filter_orders_by_date(self.valid_orders(), data)
+
+        orders = orders.filter(payment__status="SUCCESS")
+
+        if period == "month":
+
+            data = (
+                orders.annotate(period_date=TruncMonth("created_date"))
+                .values("period_date")
+                .annotate(revenue=Sum("total_amount"))
+                .order_by("period_date")
+            )
+
+            result = [
+                {
+                    "period": item["period_date"].strftime("%Y-%m"),
+                    "revenue": item["revenue"],
+                }
+                for item in data
+            ]
+
+        elif period == "quarter":
+
+            data = (
+                orders.annotate(period_date=TruncQuarter("created_date"))
+                .values("period_date")
+                .annotate(revenue=Sum("total_amount"))
+                .order_by("period_date")
+            )
+
+            result = [
+                {
+                    "period": (
+                        f"{item['period_date'].year}-Q"
+                        f"{((item['period_date'].month - 1) // 3) + 1}"
+                    ),
+                    "revenue": item["revenue"],
+                }
+                for item in data
+            ]
+
+        else:
+
+            data = (
+                orders.annotate(period_date=TruncYear("created_date"))
+                .values("period_date")
+                .annotate(revenue=Sum("total_amount"))
+                .order_by("period_date")
+            )
+
+            result = [
+                {
+                    "period": item["period_date"].strftime("%Y"),
+                    "revenue": item["revenue"],
+                }
+                for item in data
+            ]
+
+        return Response({"period": period, "data": result}, status=status.HTTP_200_OK)
+
+    @action(methods=["get"], detail=False, url_path="orders")
+    def orders(self, request):
+
+        serializer = serializers.DashboardDateSerializer(data=request.query_params)
+
+        serializer.is_valid(raise_exception=True)
+
+        data = serializer.validated_data
+
+        orders = self.filter_orders_by_date(self.valid_orders(), data)
+
+        result = orders.values("status").annotate(count=Count("id")).order_by("status")
+
+        orders_by_status = {item["status"]: item["count"] for item in result}
+
+        return Response(
+            {"total_orders": orders.count(), "orders_by_status": orders_by_status},
+            status=status.HTTP_200_OK,
+        )
+
+    @action(methods=["get"], detail=False, url_path="top-products")
+    def top_products(self, request):
+
+        serializer = serializers.DashboardTopProductSerializer(
+            data=request.query_params
+        )
+
+        serializer.is_valid(raise_exception=True)
+
+        data = serializer.validated_data
+        limit = data["limit"]
+
+        orders = self.filter_orders_by_date(self.valid_orders(), data)
+
+        orders = orders.filter(payment__status="SUCCESS")
+
+        details = OrderDetail.objects.filter(order__in=orders)
+
+        products = (
+            details.values(
+                "product_variant__product_id", "product_variant__product__name"
+            )
+            .annotate(
+                quantity_sold=Sum("quantity"),
+                revenue=Sum(F("quantity") * F("unit_price")),
+            )
+            .order_by("-quantity_sold")[:limit]
+        )
+
+        result = [
+            {
+                "product_id": item["product_variant__product_id"],
+                "product_name": item["product_variant__product__name"],
+                "quantity_sold": item["quantity_sold"],
+                "revenue": item["revenue"],
+            }
+            for item in products
+        ]
+
+        return Response({"limit": limit, "products": result}, status=status.HTTP_200_OK)

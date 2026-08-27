@@ -280,3 +280,39 @@ class CreateOrderFromCartItemSerializer(serializers.Serializer):
                 "Shipping address is required."
             )
         return value.strip()
+
+class DashboardDateSerializer(serializers.Serializer):
+    date_from = serializers.DateField(
+        required=False,
+        allow_null=True
+    )
+    date_to = serializers.DateField(
+        required=False,
+        allow_null=True
+    )
+
+    def validate(self, attrs):
+        date_from = attrs.get("date_from")
+        date_to = attrs.get("date_to")
+
+        if date_from and date_to and date_from > date_to:
+            raise serializers.ValidationError(
+                "date_from must be less than or equal to date_to."
+            )
+
+        return attrs
+
+
+class DashboardRevenueSerializer(DashboardDateSerializer):
+    period = serializers.ChoiceField(
+        choices=["month", "quarter", "year"],
+        default="month"
+    )
+
+
+class DashboardTopProductSerializer(DashboardDateSerializer):
+    limit = serializers.IntegerField(
+        min_value=1,
+        max_value=100,
+        default=10
+    )
