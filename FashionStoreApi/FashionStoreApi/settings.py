@@ -25,7 +25,11 @@ SECRET_KEY = "django-insecure-_b5458%(_6xb$7oco!!_1rigch%_4kv=av^eq=cr0u+3q1d6kq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "efashionstore-production.up.railway.app",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
