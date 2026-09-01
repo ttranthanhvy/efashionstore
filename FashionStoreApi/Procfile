@@ -1,1 +1,1 @@
-web: gunicorn FashionStoreApi.wsgi:application
+web: python manage.py collectstatic --noinput && gunicorn FashionStoreApi.wsgi
