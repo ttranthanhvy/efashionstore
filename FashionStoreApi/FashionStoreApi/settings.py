@@ -36,6 +36,7 @@ CSRF_TRUSTED_ORIGINS = [ "https://efashionstore-production.up.railway.app"]
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -164,3 +165,54 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Fashion Store Admin",
+    "site_header": "Fashion Store",
+    "site_brand": "Fashion Store",
+
+    "welcome_sign": "Welcome to Fashion Store Admin",
+    "copyright": "Fashion Store",
+
+    "show_sidebar": True,
+    "navigation_expanded": True,
+
+    "icons": {
+        "auth.User": "fas fa-users",
+
+        "FashionStore.User": "fas fa-user",
+        "FashionStore.Category": "fas fa-tags",
+        "FashionStore.Product": "fas fa-shirt",
+        "FashionStore.ProductVariant": "fas fa-box",
+        "FashionStore.Order": "fas fa-shopping-cart",
+        "FashionStore.OrderDetail": "fas fa-file-invoice",
+        "FashionStore.Payment": "fas fa-credit-card",
+        "FashionStore.Rating": "fas fa-star",
+        "FashionStore.Cart": "fas fa-cart-shopping",
+        "FashionStore.CartItem": "fas fa-cart-plus",
+    },
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "flatly",
+    "dark_mode_theme": "darkly",
+
+    "navbar_small_text": False,
+    "footer_small_text": False,
+
+    "body_small_text": False,
+    "brand_small_text": False,
+
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success",
+    },
+}
