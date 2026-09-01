@@ -29,9 +29,9 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "efashionstore-production.up.railway.app",
     "localhost",
-    "127.0.0.1",
+    "127.0.0.1"
 ]
-
+CSRF_TRUSTED_ORIGINS = [ "https://efashionstore-production.up.railway.app"]
 
 # Application definition
 
