@@ -137,27 +137,23 @@ class StaffViewset(viewsets.ViewSet):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @action(methods=["get"], detail=False, url_path="pending")
-    def pending(self, request):
-        staffs = User.objects.filter(role=User.Role.STAFF, is_approved=False)
-        serializer = serializers.StaffSerializer(staffs, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(methods=["patch"], detail=True, url_path="reject")
-    def approve(self, request, pk):
+    def reject(self, request, pk):
         try:
-            staff = User.objects.get(pk=pk)
+            staff = User.objects.get(
+                pk=pk,
+                role=User.Role.STAFF
+            )
         except User.DoesNotExist:
             return Response(
-                {"detail": "Staff not found."}, status=status.HTTP_404_NOT_FOUND
+                {"detail": "Staff not found."},
+                status=status.HTTP_404_NOT_FOUND
             )
-        serializer = serializers.UserActiveSerializer(
-            staff, data=request.data, partial=True, context={"request": request}
-        )
+
         staff.is_approved = False
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        staff.save(update_fields=["is_approved"])
+        return Response({"detail": "Staff rejected successfully."}, status=status.HTTP_200_OK)
 
 
 class CategoryViewset(viewsets.ReadOnlyModelViewSet):
@@ -173,7 +169,7 @@ class AdminCategoryViewset(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = serializers.CategorySerializer
     permission_classes = [perms.Isadmin]
-    http_method_names = ["post", "patch", "delete"]
+    http_method_names = ["get", "post", "patch", "delete"]
 
     def destroy(self, request, *args, **kwargs):
         category = self.get_object()
@@ -770,25 +766,18 @@ class AdminDashboardViewSet(viewsets.ViewSet):
     def revenue(self, request):
 
         serializer = serializers.DashboardRevenueSerializer(data=request.query_params)
-
         serializer.is_valid(raise_exception=True)
-
         data = serializer.validated_data
         period = data["period"]
-
         orders = self.filter_orders_by_date(self.valid_orders(), data)
-
         orders = orders.filter(payment__status="SUCCESS")
-
         if period == "month":
-
             data = (
                 orders.annotate(period_date=TruncMonth("created_date"))
                 .values("period_date")
                 .annotate(revenue=Sum("total_amount"))
                 .order_by("period_date")
             )
-
             result = [
                 {
                     "period": item["period_date"].strftime("%Y-%m"),
@@ -796,16 +785,13 @@ class AdminDashboardViewSet(viewsets.ViewSet):
                 }
                 for item in data
             ]
-
         elif period == "quarter":
-
             data = (
                 orders.annotate(period_date=TruncQuarter("created_date"))
                 .values("period_date")
                 .annotate(revenue=Sum("total_amount"))
                 .order_by("period_date")
             )
-
             result = [
                 {
                     "period": (
@@ -816,7 +802,6 @@ class AdminDashboardViewSet(viewsets.ViewSet):
                 }
                 for item in data
             ]
-
         else:
 
             data = (
@@ -825,7 +810,6 @@ class AdminDashboardViewSet(viewsets.ViewSet):
                 .annotate(revenue=Sum("total_amount"))
                 .order_by("period_date")
             )
-
             result = [
                 {
                     "period": item["period_date"].strftime("%Y"),
@@ -840,15 +824,10 @@ class AdminDashboardViewSet(viewsets.ViewSet):
     def orders(self, request):
 
         serializer = serializers.DashboardDateSerializer(data=request.query_params)
-
         serializer.is_valid(raise_exception=True)
-
         data = serializer.validated_data
-
         orders = self.filter_orders_by_date(self.valid_orders(), data)
-
         result = orders.values("status").annotate(count=Count("id")).order_by("status")
-
         orders_by_status = {item["status"]: item["count"] for item in result}
 
         return Response(
@@ -859,25 +838,16 @@ class AdminDashboardViewSet(viewsets.ViewSet):
     @action(methods=["get"], detail=False, url_path="top-products")
     def top_products(self, request):
 
-        serializer = serializers.DashboardTopProductSerializer(
-            data=request.query_params
-        )
-
+        serializer = serializers.DashboardTopProductSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
-
         data = serializer.validated_data
         limit = data["limit"]
-
         orders = self.filter_orders_by_date(self.valid_orders(), data)
-
         orders = orders.filter(payment__status="SUCCESS")
-
         details = OrderDetail.objects.filter(order__in=orders)
 
         products = (
-            details.values(
-                "product_variant__product_id", "product_variant__product__name"
-            )
+            details.values("product_variant__product_id", "product_variant__product__name")
             .annotate(
                 quantity_sold=Sum("quantity"),
                 revenue=Sum(F("quantity") * F("unit_price")),

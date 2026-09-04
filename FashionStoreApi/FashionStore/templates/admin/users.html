@@ -1,0 +1,166 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h2>User Management</h2>
+    <div class="mb-3">
+        <input id="searchInput" class="form-control" placeholder="Search username, name or email..."
+            oninput="searchUsers()">
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-users"></i> Customers</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Avatar</th>
+                            <th>Username</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTable">
+                        <tr>
+                            <td colspan="6" class="text-center">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <span id="pageInfo">Page 1</span>
+                <div>
+                    <button id="prevBtn" class="btn btn-secondary btn-sm" onclick="previousPage()" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <button id="nextBtn" class="btn btn-primary btn-sm" onclick="nextPage()">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="userModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">User Detail</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body" id="userDetail"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API = "http://127.0.0.1:8000/FashionStore/api/secure/admin/users", SIZE = 20;
+    let page = 1, total = 1, users = [];
+
+    async function getAPI(url, opt = {}) {
+        const token = localStorage.getItem("access");
+        const r = await fetch(url, { ...opt, headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", ...(opt.headers || {}) } });
+        if (!r.ok) throw Error(`${r.status}: ${await r.text()}`);
+        return r.json();
+    }
+
+    async function loadUsers(p = 1) {
+        try {
+            const d = await getAPI(`${API}/?page=${p}`);
+            users = d.results || []; page = p; total = Math.ceil(d.count / SIZE) || 1;
+            render(users);
+            pageInfo.innerText = `Page ${page} / ${total}`;
+            prevBtn.disabled = !d.previous;
+            nextBtn.disabled = !d.next;
+        } catch (e) {
+            console.error(e);
+            userTable.innerHTML = '<tr><td colspan="7" class="text-center text-danger">Failed to load users.</td></tr>';
+        }
+    }
+
+    function render(data) {
+        userTable.innerHTML = data.length ? data.map(u => `
+        <tr>
+            <td>${u.id}</td>
+            <td><img src="${u.avatar ? `https://res.cloudinary.com/cfmx4ijr/${u.avatar}` : 'https://via.placeholder.com/45'}" width="45" height="45" style="border-radius:50%;object-fit:cover"></td>
+            <td>${u.username || "-"}</td>
+            <td>${u.first_name || ""} ${u.last_name || ""}</td>
+            <td>${u.email || "-"}</td>
+            <td><span class="badge badge-${u.is_active ? "success" : "danger"}">${u.is_active ? "Active" : "Locked"}</span></td>
+            <td><button class="btn btn-sm btn-${u.is_active ? "danger" : "success"}" onclick="toggleUser(${u.id},${u.is_active})"><i class="fas fa-${u.is_active ? "lock" : "unlock"}"></i> ${u.is_active ? "Lock" : "Unlock"}</button></td>
+        </tr>`).join("") : '<tr><td colspan="7" class="text-center">No users found.</td></tr>';
+    }
+
+    function searchUsers() {
+        const k = searchInput.value.toLowerCase();
+        render(users.filter(u => `${u.username} ${u.first_name} ${u.last_name} ${u.email}`.toLowerCase().includes(k)));
+    }
+
+    function nextPage() { if (page < total) loadUsers(page + 1) }
+    function previousPage() { if (page > 1) loadUsers(page - 1) }
+
+    function getCookie(name) {
+        const cookies = document.cookie.split(";");
+
+        for (const cookie of cookies) {
+            const [key, value] = cookie.trim().split("=");
+            if (key === name) return decodeURIComponent(value);
+        }
+
+        return null;
+    }
+
+    async function toggleUser(id, status) {
+        const csrftoken = getCookie("csrftoken");
+
+        if (!csrftoken) {
+            alert("CSRF token not found.");
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                `${API}/${id}/active/`,
+                {
+                    method: "PATCH",
+                    credentials: "same-origin",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrftoken
+                    },
+                    body: JSON.stringify({
+                        is_active: !status
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                console.error(data);
+                alert(data.detail || "Update failed.");
+                return;
+            }
+
+            await loadUsers(page);
+
+        } catch (error) {
+            console.error(error);
+            alert("Cannot connect to API.");
+        }
+    }
+
+    loadUsers();
+</script>
+
+{% endblock %}

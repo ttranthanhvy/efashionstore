@@ -1,0 +1,590 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2>Staff Management</h2>
+    <div class="card mt-3">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-user-tie"></i> Staff
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between mb-3">
+                <input id="searchInput" class="form-control" style="max-width:400px"
+                    placeholder="Search username, name or email..." oninput="searchStaff()">
+
+                <button type="button" class="btn btn-success" onclick="openAddStaffModal()">
+                    <i class="fas fa-user-plus"></i>
+                    Add Staff
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Avatar</th>
+                            <th>Username</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Approval</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="staffTable">
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                Loading...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <button type="button" id="prevBtn" class="btn btn-secondary btn-sm" onclick="previousPage()" disabled>
+                    Previous
+                </button>
+
+                <span id="pageInfo">
+                    Page 1 / 1
+                </span>
+
+                <button type="button" id="nextBtn" class="btn btn-primary btn-sm" onclick="nextPage()" disabled>
+                    Next
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-user-plus"></i>
+                    Add Staff
+                </h5>
+
+                <button type="button" class="close" onclick="closeAddStaffModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form id="addStaffForm" enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input id="staffUsername" name="username" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input id="staffFirstName" name="first_name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input id="staffLastName" name="last_name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input id="staffEmail" name="email" type="email" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input id="staffPassword" name="password" type="password" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Avatar</label>
+                        <input id="staffAvatar" name="avatar" type="file" class="form-control" accept="image/*">
+                    </div>
+
+                    <div id="avatarPreviewContainer" class="text-center mt-3" style="display:none">
+                        <img id="avatarPreview" width="100" height="100" style="
+                                width:100px;
+                                height:100px;
+                                object-fit:cover;
+                                border-radius:50%;
+                                border:1px solid #ddd;
+                            ">
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" onclick="closeAddStaffModal()">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="btn btn-success" id="createStaffBtn">
+                        <i class="fas fa-user-plus"></i>
+                        Create Staff
+                    </button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const API = "/FashionStore/api/secure/admin/staffs/";
+    const SIZE = 20;
+    const CLOUDINARY_BASE = "https://res.cloudinary.com/cfmx4ijr/";
+
+    let page = 1;
+    let total = 1;
+    let staffs = [];
+
+    function getCookie(name) {
+        const cookie = document.cookie
+            .split(";")
+            .find(x => x.trim().startsWith(name + "="));
+
+        return cookie
+            ? decodeURIComponent(
+                cookie.trim().substring(name.length + 1)
+            )
+            : null;
+    }
+
+    async function getAPI(url, options = {}) {
+        const headers = {
+            ...(options.headers || {})
+        };
+
+        if (options.method && options.method !== "GET") {
+            headers["X-CSRFToken"] = getCookie("csrftoken");
+        }
+
+        const response = await fetch(url, {
+            ...options,
+            credentials: "same-origin",
+            headers
+        });
+
+        if (!response.ok) {
+            const text = await response.text();
+            throw new Error(text);
+        }
+
+        const contentType = response.headers.get("content-type");
+
+        if (contentType && contentType.includes("application/json")) {
+            return response.json();
+        }
+
+        return {};
+    }
+
+    function getAvatar(avatar) {
+        const fallback = "https://via.placeholder.com/60";
+
+        if (!avatar) {
+            return fallback;
+        }
+
+        if (typeof avatar === "object") {
+            if (avatar.url) {
+                return avatar.url;
+            }
+
+            if (avatar.secure_url) {
+                return avatar.secure_url;
+            }
+
+            return fallback;
+        }
+
+        avatar = String(avatar).trim();
+
+        if (
+            avatar.startsWith("http://") ||
+            avatar.startsWith("https://")
+        ) {
+            return avatar;
+        }
+
+        if (avatar.startsWith("image/upload/")) {
+            return CLOUDINARY_BASE + avatar;
+        }
+
+        if (avatar.startsWith("upload/")) {
+            return CLOUDINARY_BASE + avatar;
+        }
+
+        return CLOUDINARY_BASE + "image/upload/" + avatar;
+    }
+
+    async function loadStaff(p = 1) {
+        const table = document.getElementById("staffTable");
+
+        table.innerHTML = `
+        <tr>
+            <td colspan="7" class="text-center">
+                Loading...
+            </td>
+        </tr>
+    `;
+
+        try {
+            const data = await getAPI(`${API}?page=${p}`);
+
+            staffs = data.results || [];
+
+            page = p;
+
+            total = Math.ceil(
+                (data.count || 0) / SIZE
+            ) || 1;
+
+            renderStaff(staffs);
+
+            document.getElementById("pageInfo").innerText =
+                `Page ${page} / ${total}`;
+
+            document.getElementById("prevBtn").disabled =
+                !data.previous;
+
+            document.getElementById("nextBtn").disabled =
+                !data.next;
+
+        } catch (error) {
+            console.error(error);
+
+            table.innerHTML = `
+            <tr>
+                <td colspan="7" class="text-center text-danger">
+                    Failed to load staff.
+                </td>
+            </tr>
+        `;
+        }
+    }
+
+    function renderStaff(data) {
+        const table = document.getElementById("staffTable");
+
+        if (!data.length) {
+            table.innerHTML = `
+            <tr>
+                <td colspan="7" class="text-center">
+                    No staff found.
+                </td>
+            </tr>
+        `;
+            return;
+        }
+
+        table.innerHTML = data.map(s => {
+
+            const avatar = getAvatar(s.avatar);
+
+            const fullName = [
+                s.first_name,
+                s.last_name
+            ]
+                .filter(Boolean)
+                .join(" ");
+
+            const approved = s.is_approved === true;
+
+            return `
+            <tr>
+
+                <td>
+                    ${s.id}
+                </td>
+
+                <td>
+                    <img
+                        src="${avatar}"
+                        width="60"
+                        height="60"
+                        style="
+                            width:60px;
+                            height:60px;
+                            border-radius:50%;
+                            object-fit:cover;
+                            border:1px solid #ddd;
+                        "
+                        onerror="
+                            this.onerror=null;
+                            this.src='https://via.placeholder.com/60';
+                        "
+                    >
+                </td>
+
+                <td>
+                    ${s.username || "-"}
+                </td>
+
+                <td>
+                    ${fullName || "-"}
+                </td>
+
+                <td>
+                    ${s.email || "-"}
+                </td>
+
+                <td>
+                    ${approved
+                    ? `
+                                <span class="badge badge-success">
+                                    Approved
+                                </span>
+                            `
+                    : `
+                                <span class="badge badge-danger">
+                                    Rejected
+                                </span>
+                            `
+                }
+                </td>
+
+                <td>
+                    ${approved
+                    ? `
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-danger"
+                                    onclick="rejectStaff(${s.id})"
+                                >
+                                    <i class="fas fa-user-times"></i>
+                                    Reject
+                                </button>
+                            `
+                    : `
+                                <span class="text-muted">
+                                    -
+                                </span>
+                            `
+                }
+                </td>
+
+            </tr>
+        `;
+        }).join("");
+    }
+
+    function searchStaff() {
+        const keyword = document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase()
+            .trim();
+
+        const filtered = staffs.filter(s => {
+
+            const text = `
+            ${s.username || ""}
+            ${s.first_name || ""}
+            ${s.last_name || ""}
+            ${s.email || ""}
+        `.toLowerCase();
+
+            return text.includes(keyword);
+        });
+
+        renderStaff(filtered);
+    }
+
+    function openAddStaffModal() {
+        document
+            .getElementById("addStaffForm")
+            .reset();
+
+        document
+            .getElementById("avatarPreviewContainer")
+            .style.display = "none";
+
+        document
+            .getElementById("avatarPreview")
+            .src = "";
+
+        $("#addStaffModal").modal("show");
+    }
+
+    function closeAddStaffModal() {
+        $("#addStaffModal").modal("hide");
+    }
+
+    document
+        .getElementById("staffAvatar")
+        .addEventListener("change", function () {
+
+            const file = this.files[0];
+
+            if (!file) {
+                document
+                    .getElementById("avatarPreviewContainer")
+                    .style.display = "none";
+
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                document
+                    .getElementById("avatarPreview")
+                    .src = e.target.result;
+
+                document
+                    .getElementById("avatarPreviewContainer")
+                    .style.display = "block";
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+    document
+        .getElementById("addStaffForm")
+        .addEventListener(
+            "submit",
+            async function (e) {
+
+                e.preventDefault();
+
+                const button =
+                    document.getElementById("createStaffBtn");
+
+                const form =
+                    document.getElementById("addStaffForm");
+
+                const formData =
+                    new FormData(form);
+
+                button.disabled = true;
+
+                button.innerHTML = `
+                <i class="fas fa-spinner fa-spin"></i>
+                Creating...
+            `;
+
+                try {
+
+                    await getAPI(API, {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    alert(
+                        "Staff created successfully!"
+                    );
+
+                    closeAddStaffModal();
+
+                    await loadStaff(1);
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    let message =
+                        "Failed to create staff.";
+
+                    try {
+
+                        const errors =
+                            JSON.parse(error.message);
+
+                        message =
+                            Object.entries(errors)
+                                .map(([key, value]) => {
+
+                                    if (Array.isArray(value)) {
+                                        return `${key}: ${value.join(", ")}`;
+                                    }
+
+                                    if (
+                                        typeof value === "object" &&
+                                        value !== null
+                                    ) {
+                                        return `${key}: ${JSON.stringify(value)}`;
+                                    }
+
+                                    return `${key}: ${value}`;
+                                })
+                                .join("\n");
+
+                    } catch (e) { }
+
+                    alert(message);
+
+                } finally {
+
+                    button.disabled = false;
+
+                    button.innerHTML = `
+                    <i class="fas fa-user-plus"></i>
+                    Create Staff
+                `;
+                }
+            }
+        );
+
+    async function rejectStaff(id) {
+
+        if (
+            !confirm(
+                "Are you sure you want to reject this staff?"
+            )
+        ) {
+            return;
+        }
+
+        try {
+
+            await getAPI(
+                `${API}${id}/reject/`,
+                {
+                    method: "PATCH",
+                    body: JSON.stringify({})
+                }
+            );
+
+            await loadStaff(page);
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Failed to reject staff."
+            );
+        }
+    }
+
+    function nextPage() {
+        if (page < total) {
+            loadStaff(page + 1);
+        }
+    }
+
+    function previousPage() {
+        if (page > 1) {
+            loadStaff(page - 1);
+        }
+    }
+
+    loadStaff();
+</script>
+
+{% endblock %}

@@ -1,0 +1,363 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<div class="container-fluid">
+
+    <h2>Dashboard</h2>
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3 id="users">0</h3>
+                    <p>Users</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3 id="staffs">0</h3>
+                    <p>Staff</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-primary">
+                <div class="inner">
+                    <h3 id="orders">0</h3>
+                    <p>Total Orders</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3 id="revenue">0 ₫</h3>
+                    <p>Total Revenue</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="card mt-3">
+
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-chart-line"></i>
+                Revenue Statistics
+            </h3>
+
+            <div class="card-tools">
+                <select id="revenuePeriod" class="form-control">
+                    <option value="month">Monthly</option>
+                    <option value="quarter">Quarterly</option>
+                    <option value="year">Yearly</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <canvas id="revenueChart"></canvas>
+        </div>
+
+    </div>
+
+    <div class="card mt-3">
+
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-shopping-cart"></i>
+                Order Statistics
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="small-box bg-primary">
+                        <div class="inner">
+                            <h3 id="pendingOrders">0</h3>
+                            <p>Pending</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3 id="confirmedOrders">0</h3>
+                            <p>Confirmed</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3 id="completedOrders">0</h3>
+                            <p>Completed</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3 id="cancelledOrders">0</h3>
+                            <p>Cancelled</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card mt-3">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-fire"></i>
+                Top Products
+            </h3>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Total Sold</th>
+                        <th>Revenue</th>
+                    </tr>
+                </thead>
+                <tbody id="topProducts"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const API =
+        "http://127.0.0.1:8000/FashionStore/api/secure";
+
+    const token =
+        localStorage.getItem("access");
+    let revenueChart = null;
+
+    async function getAPI(url) {
+
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+        if (!response.ok) {
+            throw new Error("API Error: " + response.status);
+        }
+        return await response.json();
+    }
+
+    async function loadUsers() {
+
+        const users = await getAPI(
+            `${API}/admin/users/`
+        );
+
+        document.getElementById("users").innerText =
+            users.count;
+    }
+
+
+    async function loadStaffs() {
+
+        const staffs = await getAPI(
+            `${API}/admin/staffs/`
+        );
+
+        document.getElementById("staffs").innerText =
+            staffs.count;
+    }
+
+
+    async function loadOrders() {
+
+        const orders = await getAPI(
+            `${API}/admin/dashboard/orders/`
+        );
+
+        document.getElementById("orders").innerText =
+            orders.total_orders;
+
+        document.getElementById("pendingOrders").innerText =
+            orders.orders_by_status.PENDING || 0;
+
+        document.getElementById("confirmedOrders").innerText =
+            orders.orders_by_status.CONFIRMED || 0;
+
+        document.getElementById("completedOrders").innerText =
+            orders.orders_by_status.COMPLETED || 0;
+
+        document.getElementById("cancelledOrders").innerText =
+            orders.orders_by_status.CANCELLED || 0;
+    }
+
+
+    async function loadRevenue() {
+
+        const period =
+            document.getElementById("revenuePeriod").value;
+
+        const revenue = await getAPI(
+            `${API}/admin/dashboard/revenue/?period=${period}`
+        );
+
+        let totalRevenue = 0;
+
+        revenue.data.forEach(item => {
+            totalRevenue += Number(item.revenue);
+        });
+
+        document.getElementById("revenue").innerText =
+            totalRevenue.toLocaleString("vi-VN") + " ₫";
+
+
+        const labels = revenue.data.map(
+            item => item.period
+        );
+
+        const values = revenue.data.map(
+            item => Number(item.revenue)
+        );
+
+
+        if (revenueChart) {
+            revenueChart.destroy();
+        }
+
+
+        revenueChart = new Chart(
+            document.getElementById("revenueChart"),
+            {
+                type: "line",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "Revenue",
+                        data: values,
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return Number(value)
+                                        .toLocaleString("vi-VN")
+                                        + " ₫";
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return Number(
+                                        context.raw
+                                    ).toLocaleString("vi-VN")
+                                        + " ₫";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        );
+    }
+
+
+    async function loadTopProducts() {
+        const products = await getAPI(
+            `${API}/admin/dashboard/top-products/?limit=5`
+        );
+        const table =
+            document.getElementById("topProducts");
+
+        table.innerHTML = "";
+
+        products.products.forEach(
+            (product, index) => {
+                table.innerHTML += `
+                <tr>
+                    <td>
+                        ${index + 1}
+                    </td>
+                    <td>
+                        ${product.product_name}
+                    </td>
+                    <td>
+                        ${product.quantity_sold}
+                    </td>
+                    <td>
+                        ${Number(
+                    product.revenue
+                ).toLocaleString("vi-VN")} ₫
+                    </td>
+                </tr>
+            `;}
+        );
+    }
+
+    async function loadDashboard() {
+
+        try {
+            await loadUsers();
+            await loadStaffs();
+            await loadOrders();
+            await loadRevenue();
+            await loadTopProducts();
+        } catch (error) {
+            console.error(
+                "Dashboard error:",
+                error
+            );
+        }
+    }
+
+    document.getElementById("revenuePeriod").addEventListener("change", loadRevenue);
+    
+    loadDashboard();
+
+</script>
+
+{% endblock %}

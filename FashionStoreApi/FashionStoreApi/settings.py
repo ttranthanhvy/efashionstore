@@ -87,11 +87,16 @@ WSGI_APPLICATION = "FashionStoreApi.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": os.environ.get("MYSQLDATABASE"),
-        "USER": os.environ.get("MYSQLUSER"),
-        "PASSWORD": os.environ.get("MYSQLPASSWORD"),
-        "HOST": os.environ.get("MYSQLHOST"),
-        "PORT": os.environ.get("MYSQLPORT"),
+        "NAME": "fstoredb",
+        "USER": "root",
+        "PASSWORD": "123456",
+        "HOST": "",  # mặc định localhost
+        # "ENGINE": "django.db.backends.mysql",
+        # "NAME": os.environ.get("MYSQLDATABASE"),
+        # "USER": os.environ.get("MYSQLUSER"),
+        # "PASSWORD": os.environ.get("MYSQLPASSWORD"),
+        # "HOST": os.environ.get("MYSQLHOST"),
+        # "PORT": os.environ.get("MYSQLPORT"),
     }
 }
 
@@ -113,6 +118,7 @@ cloudinary.config(
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
         "FashionStore.authentication.CustomJWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
@@ -176,6 +182,25 @@ JAZZMIN_SETTINGS = {
 
     "show_sidebar": True,
     "navigation_expanded": True,
+    "custom_links": {
+        "FashionStore": [
+            {
+                "name": "Users",
+                "url": "/admin/users/",
+                "icon": "fas fa-users",
+            },
+            {
+                "name": "Staffs",
+                "url": "/admin/staffs/",
+                "icon": "fas fa-user-tie",
+            },
+            {
+                "name": "Categories",
+                "url": "/admin/categories/",
+                "icon": "fas fa-tags",
+            },
+        ],
+    },
 
     "icons": {
         "auth.User": "fas fa-users",
@@ -184,18 +209,13 @@ JAZZMIN_SETTINGS = {
         "FashionStore.Category": "fas fa-tags",
         "FashionStore.Product": "fas fa-shirt",
         "FashionStore.ProductVariant": "fas fa-box",
-        "FashionStore.Order": "fas fa-shopping-cart",
-        "FashionStore.OrderDetail": "fas fa-file-invoice",
-        "FashionStore.Payment": "fas fa-credit-card",
         "FashionStore.Rating": "fas fa-star",
-        "FashionStore.Cart": "fas fa-cart-shopping",
-        "FashionStore.CartItem": "fas fa-cart-plus",
     },
 }
 
 JAZZMIN_UI_TWEAKS = {
     "theme": "flatly",
-    "dark_mode_theme": "darkly",
+    "default_theme_mode": "auto",
 
     "navbar_small_text": False,
     "footer_small_text": False,
