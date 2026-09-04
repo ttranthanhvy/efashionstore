@@ -108,7 +108,7 @@ class Payment(models.Model):
 
     class Method(models.TextChoices):
         COD = "cod", "Cash on Delivery"
-        MOMO = "momo", "MoMo"
+        VNpay = "vnpay", "VNpay"
 
     class Status(models.TextChoices):
         PENDING = "pending", "Pending"

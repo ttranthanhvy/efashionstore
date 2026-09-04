@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -236,3 +239,16 @@ JAZZMIN_UI_TWEAKS = {
         "success": "btn-success",
     },
 }
+
+VNPAY_TMN_CODE = os.getenv("VNPAY_TMN_CODE")
+VNPAY_HASH_SECRET = os.getenv("VNPAY_HASH_SECRET")
+
+VNPAY_PAYMENT_URL = os.getenv(
+    "VNPAY_PAYMENT_URL",
+    "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
+)
+
+VNPAY_RETURN_URL = os.getenv(
+    "VNPAY_RETURN_URL",
+    "http://127.0.0.1:8000/api/payments/vnpay/callback"
+)

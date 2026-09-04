@@ -13,12 +13,16 @@ from .models import (
     OrderDetail,
     Payment,
 )
+from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from FashionStore import serializers, perms, paginators, services
 from django.db import models, transaction
 from django.db.models import Sum, Count, F
 from django.db.models.functions import TruncMonth, TruncQuarter, TruncYear
+from decimal import Decimal, InvalidOperation
+
+from .vnpay import verify_vnpay_signature, build_vnpay_payment_url
 
 
 # Create your views here.
@@ -866,3 +870,189 @@ class AdminDashboardViewSet(viewsets.ViewSet):
         ]
 
         return Response({"limit": limit, "products": result}, status=status.HTTP_200_OK)
+
+class VNPayCreatePaymentView(APIView):
+    permission_classes = [perms.IsCustomer]
+
+    def post(self, request):
+        order_id = request.data.get("order_id")
+
+        if not order_id:
+            return Response({"detail": "order_id is required."}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            order = Order.objects.get(id=order_id, user=request.user)
+        except Order.DoesNotExist:
+            return Response( {"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        if order.status == Order.Status.CANCELLED:
+            return Response({"detail": "Cancelled order cannot be paid."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            payment = order.payment
+        except Payment.DoesNotExist:
+            payment = None
+
+        if payment and payment.status == Payment.Status.PAID:
+            return Response({"detail": "Order has already been paid."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Nếu chưa có Payment thì tạo
+        if payment is None:
+            payment = Payment.objects.create(
+                order=order,
+                method=Payment.Method.VNpay,
+                amount=order.total_amount,
+                status=Payment.Status.PENDING
+            )
+
+        else:
+            payment.amount = order.total_amount
+            payment.method = Payment.Method.VNpay
+            payment.status = Payment.Status.PENDING
+            payment.save(update_fields=["amount", "method", "status" ])
+
+        ip_address = request.META.get(
+            "HTTP_X_FORWARDED_FOR"
+        )
+
+        if ip_address:
+            ip_address = ip_address.split(",")[0]
+        else:
+            ip_address = request.META.get(
+                "REMOTE_ADDR",
+                "127.0.0.1"
+            )
+
+        payment_url = build_vnpay_payment_url(
+            order=order,
+            ip_address=ip_address
+        )
+
+        return Response(
+            {
+                "message": "Create VNPay payment successfully.",
+                "order_id": order.id,
+                "payment_id": payment.id,
+                "amount": str(payment.amount),
+                "payment_url": payment_url
+            },
+            status=status.HTTP_200_OK
+        )
+
+class VNPayCallbackView(APIView):
+
+    def get(self, request):
+        params = request.GET.dict()
+
+        if not verify_vnpay_signature(params):
+            return Response(
+                {
+                    "success": False,
+                    "message": "Invalid VNPay signature."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        txn_ref = params.get("vnp_TxnRef")
+        response_code = params.get("vnp_ResponseCode")
+        transaction_status = params.get(
+            "vnp_TransactionStatus"
+        )
+
+        if not txn_ref:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Missing vnp_TxnRef."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            order = Order.objects.get(id=int(txn_ref))
+        except (Order.DoesNotExist, ValueError):
+            return Response(
+                {
+                    "success": False,
+                    "message": "Order not found."
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        try:
+            payment = order.payment
+        except Payment.DoesNotExist:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Payment not found."
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        vnp_amount = params.get("vnp_Amount")
+        if not vnp_amount:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Missing payment amount."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        try:
+            expected_amount = int(
+                payment.amount * 100
+            )
+            received_amount = int(vnp_amount)
+
+        except (ValueError, TypeError):
+            return Response(
+                {
+                    "success": False,
+                    "message": "Invalid payment amount."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if received_amount != expected_amount:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Payment amount mismatch."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if (
+            response_code == "00"
+            and transaction_status == "00"
+        ):
+            if payment.status != Payment.Status.PAID:
+
+                payment.status = Payment.Status.PAID
+                payment.save(
+                    update_fields=["status"]
+                )
+            return Response(
+                {
+                    "success": True,
+                    "message": "Payment successful.",
+                    "order_id": order.id,
+                    "payment_id": payment.id,
+                    "payment_status": payment.status
+                },
+                status=status.HTTP_200_OK
+            )
+        payment.status = Payment.Status.FAILED
+        payment.save(
+            update_fields=["status"]
+        )
+        return Response(
+            {
+                "success": False,
+                "message": "Payment failed.",
+                "order_id": order.id,
+                "payment_id": payment.id,
+                "payment_status": payment.status,
+                "response_code": response_code
+            },
+            status=status.HTTP_200_OK
+        )
