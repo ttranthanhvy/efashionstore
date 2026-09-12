@@ -42,7 +42,9 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         user.role = User.Role.CUSTOMER
         Cart.objects.create(user=user)
-        user.save(update_fields=["role"])
+        user.is_active = True
+        user.is_approved = False
+        user.save(update_fields=["role", "is_active", "is_approved"])
         return user
 
 
@@ -186,7 +188,6 @@ class ProductSerializer(serializers.ModelSerializer):
             "quantity_sold",
         ]
 
-
 class VariantSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductVariant
@@ -194,13 +195,17 @@ class VariantSerializer(serializers.ModelSerializer):
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    thumbnail = serializers.CharField(
-        source="product_variant.product.thumbnail.url", read_only=True
-    )
+    thumbnail = serializers.CharField(source="product_variant.product.thumbnail.url", read_only=True)
+    product_name = serializers.CharField(source="product_variant.product.name", read_only=True)
+    product_id = serializers.IntegerField(source="product_variant.product.id",read_only=True)
+    color = serializers.CharField(source="product_variant.color", read_only=True)
+    size = serializers.CharField(source="product_variant.size", read_only=True)
+    price = serializers.DecimalField(source="product_variant.price", max_digits=12, decimal_places=2, read_only=True)
+    stock = serializers.IntegerField(source="product_variant.stock", read_only=True)
 
     class Meta:
         model = CartItem
-        fields = ["id", "quantity", "created_date", "product_variant", "thumbnail"]
+        fields = ["id", "quantity", "created_date", "product_variant", "product_name", "product_id", "color", "size", "price", "thumbnail", "stock"]
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -212,41 +217,31 @@ class CartSerializer(serializers.ModelSerializer):
 
 
 class RatingSerializer(serializers.ModelSerializer):
-
+    customer_username = serializers.SerializerMethodField()
+    customer_avatar = serializers.SerializerMethodField()
     class Meta:
         model = Rating
-        fields = ["rate", "comment", "created_date", "updated_date", "product"]
+        fields = ["id", "rate", "comment", "created_date", "updated_date", "product", "user_id", "customer_username", "customer_avatar"]
+    
+    def get_customer_username(self, obj):
+        return obj.user.username
 
-
-from rest_framework import serializers
-
+    def get_customer_avatar(self, obj):
+        if obj.user.avatar:
+            return str(obj.user.avatar)
+        return None
 
 class OrderSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source="user.username", read_only=True)
+    cart_item_ids = serializers.ListField(child=serializers.IntegerField(min_value=1), write_only=True, required=True, allow_empty=False)
     shipping_address = serializers.CharField(required=True, allow_blank=False)
-    payment_method = serializers.CharField(
-        source="payment.method",
-        read_only=True
-    )
-    payment_status = serializers.CharField(
-        source="payment.status",
-        read_only=True
-    )
-
+    phone = serializers.CharField(required=True,allow_blank=False,max_length=20)
+    payment_method = serializers.ChoiceField(choices=Payment.Method.choices, write_only=True, required=True)
+    payment_status = serializers.CharField(source="payment.status", read_only=True)
     class Meta:
         model = Order
-        fields = [
-            "id",
-            "shipping_address",
-            "payment_method",
-            "payment_status",
-            "total_amount",
-            "status",
-            "created_date",
-
-        ]
+        fields = ["id", "shipping_address", "payment_method", "payment_status", "total_amount", "status", "created_date", "phone", "cart_item_ids", "username"]
         read_only_fields = ["id", "total_amount", "status", "created_date"]
-
-
 
 class OrderDetailSerializer(serializers.ModelSerializer):
     product_name = serializers.CharField(source="product_variant.product.name", read_only=True)
@@ -270,6 +265,10 @@ class OrderDetailSerializer(serializers.ModelSerializer):
 class CreateOrderFromCartItemSerializer(serializers.Serializer):
     shipping_address = serializers.CharField(
         max_length=500,
+        allow_blank=False
+    )
+    phone = serializers.CharField(
+        max_length=20,
         allow_blank=False
     )
     payment_method = serializers.ChoiceField(

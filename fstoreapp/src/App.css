@@ -1,0 +1,117 @@
+.App {
+  min-height: 100vh;
+  background-color: #FFF7E6;
+}
+
+body {
+  margin: 0;
+  background-color: #FFF7E6;
+}
+
+.header {
+  background-color: #F7C8D3;
+}
+
+.footer {
+  background-color: #B46472;
+  color: white;
+}
+
+.navbar-brand {
+  color: #5c3038 !important;
+}
+
+.nav-link {
+  color: #5c3038 !important;
+}
+
+.nav-link:hover {
+  color: #B46472 !important;
+}
+
+.dropdown-menu {
+  background-color: #FFF7E6;
+  border: 1px solid #F7C8D3;
+}
+
+.dropdown-item {
+  color: #5c3038;
+}
+
+.dropdown-item:hover {
+  background-color: #F7C8D3;
+  color: #5c3038;
+}
+
+.login-page {
+  min-height: calc(100vh - 80px);
+  background-color: #FFF7E6;
+  margin: 0;
+}
+
+.login-card {
+  background-color: #FFFFFF;
+}
+
+.login-title {
+  color: #5c3038;
+  font-size: 32px;
+}
+
+.login-card .form-control {
+  height: 48px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.login-card .form-control:focus {
+  border-color: #B46472;
+  box-shadow: 0 0 0 0.15rem rgba(180, 100, 114, 0.15);
+}
+
+.login-button {
+  height: 48px;
+  border: none;
+  border-radius: 8px;
+  background-color: #B46472;
+  font-weight: 700;
+}
+
+.login-button:hover {
+  background-color: #9f5362;
+}
+
+.login-link {
+  color: #B46472;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  color: #5c3038;
+  text-decoration: underline;
+}
+
+.app-page {
+  margin-top: 30px;
+  /* cách Navbar màu hồng */
+  align-items: stretch;
+}
+
+.login-image {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.login-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.auth-card {
+  width: 100%;
+  height: 100%;
+}
+

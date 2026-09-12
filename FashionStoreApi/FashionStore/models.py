@@ -7,8 +7,9 @@ from django.conf import settings
 
 # Create your models here.
 class User(AbstractUser):
-    avatar = CloudinaryField("avatar", default="default_avatar_woxm90")
+    avatar = CloudinaryField("avatar", default="default_avatar")
     email = models.EmailField(unique=True)
+    
     is_approved = models.BooleanField(default=False)
 
     class Role(models.TextChoices):
@@ -65,9 +66,10 @@ class ProductVariant(models.Model):
 
 class Order(models.Model):
     shipping_address = models.CharField(max_length=500)
+    phone = models.CharField(max_length=20)
     total_amount = models.DecimalField(max_digits=12, decimal_places=2)
     created_date = models.DateTimeField(auto_now_add=True)
-
+    
     class Status(models.TextChoices):
         PENDING = "PENDING", "Pending"
         CONFIRMED = "CONFIRMED", "Confirmed"
@@ -75,9 +77,7 @@ class Order(models.Model):
         COMPLETED = "COMPLETED", "Completed"
         CANCELLED = "CANCELLED", "Cancelled"
 
-    status = models.CharField(
-        max_length=20, choices=Status.choices, default=Status.PENDING
-    )
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -125,12 +125,6 @@ class Payment(models.Model):
     order = models.OneToOneField(
         Order, on_delete=models.CASCADE, related_name="payment"
     )
-
-class OrderHistory(models.Model):
-    
-    status = models.CharField(max_length=20)
-    changed_date = models.DateTimeField(auto_now_add=True)
-    order = models.ForeignKey(Order,on_delete=models.CASCADE,related_name="histories")
 
 class Rating(BaseModel):
     rate = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])

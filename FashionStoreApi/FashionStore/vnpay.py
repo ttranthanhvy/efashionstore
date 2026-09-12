@@ -2,6 +2,7 @@ import hashlib
 import hmac
 import urllib.parse
 from django.conf import settings
+from datetime import datetime
 
 def build_vnpay_payment_url(order, ip_address):
     params = {
@@ -14,11 +15,10 @@ def build_vnpay_payment_url(order, ip_address):
         "vnp_OrderInfo": f"Payment {order.id}",
         "vnp_OrderType": "other",
         "vnp_Locale": "vn",
+        "vnp_BankCode": "VNBANK",
         "vnp_ReturnUrl": settings.VNPAY_RETURN_URL,
         "vnp_IpAddr": ip_address,
     }
-
-    from datetime import datetime
 
     params["vnp_CreateDate"] = datetime.now().strftime("%Y%m%d%H%M%S")
 

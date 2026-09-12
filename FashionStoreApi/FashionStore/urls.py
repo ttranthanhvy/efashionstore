@@ -30,7 +30,6 @@ urlpatterns = [
     path("auth/login/", views.LoginView.as_view(), name="login"),
     path("auth/refresh/", TokenRefreshView.as_view(), name="refresh"),
     path("auth/logout/", views.LogoutView.as_view(), name="logout"),
-    path("secure/orders/cart/item/<int:cart_item_id>",views.CreateOrderFromCartItemView.as_view(),name="create-order-from-cart-item"),
     path("secure/payments/vnpay/", views.VNPayCreatePaymentView.as_view(), name="vnpay-create-payment"),
     path("payments/vnpay/callback/", views.VNPayCallbackView.as_view(), name="vnpay-callback"),
 ]

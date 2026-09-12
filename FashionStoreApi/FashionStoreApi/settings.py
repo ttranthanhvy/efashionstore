@@ -32,7 +32,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "efashionstore-production.up.railway.app",
     "localhost",
-    "127.0.0.1"
+    "127.0.0.1",
 ]
 CSRF_TRUSTED_ORIGINS = [ "https://efashionstore-production.up.railway.app"]
 
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -62,6 +63,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "FashionStoreApi.urls"
@@ -83,6 +85,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "FashionStoreApi.wsgi.application"
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
@@ -114,9 +121,9 @@ import cloudinary.uploader
 import cloudinary.api
 
 cloudinary.config(
-    cloud_name="cfmx4ijr",
-    api_key="363572437475483",
-    api_secret="HdraTjIXpZYrjdnCs4BVG3O9YWc",
+    cloud_name="kcord2gk",
+    api_key="928948235621754",
+    api_secret="yUN_EQBATu-ByyHl6_9etblBtcQ",
 )
 
 REST_FRAMEWORK = {

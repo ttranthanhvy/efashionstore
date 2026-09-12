@@ -1,0 +1,3041 @@
+======================================================================
+AVATAR IMPORT LOG
+======================================================================
+
+[Row 6]
+User ID: 12083209
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 9]
+User ID: 18423238
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 10]
+User ID: 27280686
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 12]
+User ID: 15504659
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 30]
+User ID: 11985812
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 37]
+User ID: 16110096
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 51]
+User ID: 22850409
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 56]
+User ID: 15402572
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 57]
+User ID: 26809304
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 59]
+User ID: 22643487
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 60]
+User ID: 16395956
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 65]
+User ID: 29486647
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 75]
+User ID: 15352974
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 78]
+User ID: 16961008
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 79]
+User ID: 27847159
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 100]
+User ID: 19581338
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 105]
+User ID: 10679347
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 117]
+User ID: 15426278
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 127]
+User ID: 29498552
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 129]
+User ID: 11723188
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 137]
+User ID: 7706612
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 138]
+User ID: 25906721
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 139]
+User ID: 28709313
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 140]
+User ID: 1994429
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 141]
+User ID: 11819743
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 143]
+User ID: 11740972
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 146]
+User ID: 28712364
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 155]
+User ID: 26314573
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 161]
+User ID: 15180351
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 166]
+User ID: 15093368
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 168]
+User ID: 22141803
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 170]
+User ID: 17519949
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 173]
+User ID: 16157786
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 174]
+User ID: 22182746
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 175]
+User ID: 27029151
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 177]
+User ID: 10776548
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 178]
+User ID: 13532219
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 189]
+User ID: 17890549
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 190]
+User ID: 28249704
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 191]
+User ID: 17875221
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 192]
+User ID: 8569497
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 194]
+User ID: 18577867
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 198]
+User ID: 20867676
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 200]
+User ID: 14544121
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 203]
+User ID: 12741362
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 205]
+User ID: 8251018
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 208]
+User ID: 25708388
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 209]
+User ID: 15761755
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 211]
+User ID: 7731517
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 212]
+User ID: 15798318
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 219]
+User ID: 27614001
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 221]
+User ID: 11186408
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 224]
+User ID: 12553841
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 225]
+User ID: 27426956
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 231]
+User ID: 9776683
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 233]
+User ID: 7334749
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 234]
+User ID: 27938286
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 236]
+User ID: 22633
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 237]
+User ID: 1118819
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 241]
+User ID: 6717838
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 246]
+User ID: 12973803
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 256]
+User ID: 11561513
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 258]
+User ID: 19232972
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 261]
+User ID: 16745862
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 262]
+User ID: 15647792
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 264]
+User ID: 11121799
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 271]
+User ID: 12795552
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 274]
+User ID: 16528397
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 275]
+User ID: 20318817
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 276]
+User ID: 14478553
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 278]
+User ID: 16405077
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 279]
+User ID: 628778
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 280]
+User ID: 656496
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 282]
+User ID: 16524466
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 283]
+User ID: 11479070
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 285]
+User ID: 17504218
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 288]
+User ID: 30107959
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 290]
+User ID: 12236828
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 293]
+User ID: 11771983
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 294]
+User ID: 27265415
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 297]
+User ID: 8793758
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 298]
+User ID: 17129084
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 299]
+User ID: 12291058
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 300]
+User ID: 1426994
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 301]
+User ID: 17721409
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 306]
+User ID: 1090253
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 308]
+User ID: 19236883
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 309]
+User ID: 8481405
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 311]
+User ID: 14659482
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 312]
+User ID: 30417050
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 314]
+User ID: 29340390
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 325]
+User ID: 13192833
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 330]
+User ID: 7199654
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 339]
+User ID: 30231025
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 343]
+User ID: 461419
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 353]
+User ID: 28156584
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 357]
+User ID: 1239529
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 358]
+User ID: 2168694
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 361]
+User ID: 5414723
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 364]
+User ID: 30717179
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 365]
+User ID: 28464847
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 366]
+User ID: 17704819
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 368]
+User ID: 30371322
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 369]
+User ID: 16482397
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 372]
+User ID: 22695063
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 374]
+User ID: 19712706
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 375]
+User ID: 11919815
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 376]
+User ID: 1810967
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 377]
+User ID: 7942621
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 380]
+User ID: 18517776
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 385]
+User ID: 8452143
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 389]
+User ID: 2023224
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 392]
+User ID: 27744519
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 393]
+User ID: 7182365
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 400]
+User ID: 26288092
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 406]
+User ID: 24741119
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 410]
+User ID: 6318736
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 411]
+User ID: 27267373
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 413]
+User ID: 11036116
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 416]
+User ID: 23364006
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 418]
+User ID: 8409973
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 421]
+User ID: 10885721
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 422]
+User ID: 7757493
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 428]
+User ID: 330353
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 429]
+User ID: 18235351
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 433]
+User ID: 30607784
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 438]
+User ID: 18628464
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 440]
+User ID: 8523177
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 443]
+User ID: 10972999
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 444]
+User ID: 18151744
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 445]
+User ID: 16455854
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 446]
+User ID: 10217038
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 448]
+User ID: 11018834
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 449]
+User ID: 5137688
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 451]
+User ID: 16067927
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 452]
+User ID: 14267205
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 455]
+User ID: 586926
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 456]
+User ID: 17851214
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 457]
+User ID: 22480206
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 466]
+User ID: 30086281
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 467]
+User ID: 1001229
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 468]
+User ID: 28157954
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 469]
+User ID: 27484493
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 470]
+User ID: 19309767
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 472]
+User ID: 19580762
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 474]
+User ID: 25368540
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 475]
+User ID: 20435467
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 477]
+User ID: 9719181
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 484]
+User ID: 9803657
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 489]
+User ID: 14974912
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 491]
+User ID: 13924656
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 494]
+User ID: 19197468
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 496]
+User ID: 21258700
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 498]
+User ID: 17736823
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 499]
+User ID: 30226969
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 503]
+User ID: 21396259
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 504]
+User ID: 8526815
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 505]
+User ID: 17572878
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 507]
+User ID: 19066780
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 509]
+User ID: 10185591
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 512]
+User ID: 27729720
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 518]
+User ID: 16524943
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 523]
+User ID: 30068798
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 524]
+User ID: 23080410
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 525]
+User ID: 9799154
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 527]
+User ID: 28991165
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 533]
+User ID: 10936081
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 536]
+User ID: 5393693
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 540]
+User ID: 7748923
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 541]
+User ID: 15697310
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 544]
+User ID: 1139507
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 550]
+User ID: 25597117
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 554]
+User ID: 17293391
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 558]
+User ID: 15177645
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 565]
+User ID: 1833601
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 568]
+User ID: 8042659
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 570]
+User ID: 20047665
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 571]
+User ID: 1384584
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 572]
+User ID: 6607337
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 574]
+User ID: 1068136
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 575]
+User ID: 20138390
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 576]
+User ID: 19402310
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 580]
+User ID: 19470780
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 581]
+User ID: 1095055
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 583]
+User ID: 14577108
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 586]
+User ID: 13548434
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 588]
+User ID: 1359792
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 590]
+User ID: 7802634
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 593]
+User ID: 21846545
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 594]
+User ID: 14549467
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 596]
+User ID: 8918380
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 598]
+User ID: 28020876
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 599]
+User ID: 8452352
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 604]
+User ID: 10594884
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 605]
+User ID: 11005021
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 606]
+User ID: 22848422
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 607]
+User ID: 2128371
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 610]
+User ID: 17854230
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 611]
+User ID: 11443544
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 613]
+User ID: 17106376
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 614]
+User ID: 19745402
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 615]
+User ID: 28948789
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 619]
+User ID: 24031473
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 620]
+User ID: 16511890
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 622]
+User ID: 17649796
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 623]
+User ID: 22153089
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 624]
+User ID: 24593223
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 625]
+User ID: 19831078
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 626]
+User ID: 30601615
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 628]
+User ID: 13615607
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 632]
+User ID: 17387773
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 636]
+User ID: 19555151
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 637]
+User ID: 15197073
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 638]
+User ID: 8103803
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 640]
+User ID: 10588018
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 642]
+User ID: 27364636
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 649]
+User ID: 12695550
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 650]
+User ID: 10202038
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 651]
+User ID: 19780873
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 653]
+User ID: 22122012
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 655]
+User ID: 13039988
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 657]
+User ID: 17682427
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 658]
+User ID: 23988116
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 659]
+User ID: 18301479
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 660]
+User ID: 13345885
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 661]
+User ID: 10319745
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 662]
+User ID: 23757945
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 663]
+User ID: 8596926
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 664]
+User ID: 18290959
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 665]
+User ID: 19429456
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 666]
+User ID: 18353379
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 668]
+User ID: 13843615
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 671]
+User ID: 8279738
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 672]
+User ID: 398891
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 674]
+User ID: 12283291
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 678]
+User ID: 9929202
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 681]
+User ID: 784129
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 684]
+User ID: 21367690
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 685]
+User ID: 26307960
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 687]
+User ID: 18795935
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 693]
+User ID: 176028
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 695]
+User ID: 30303848
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 696]
+User ID: 17464607
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 698]
+User ID: 12319156
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 703]
+User ID: 6308613
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 705]
+User ID: 29971066
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 707]
+User ID: 28731119
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 710]
+User ID: 21656292
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 712]
+User ID: 19991343
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 713]
+User ID: 30645426
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 717]
+User ID: 15568533
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 721]
+User ID: 18220212
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 722]
+User ID: 17853145
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 723]
+User ID: 13913725
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 725]
+User ID: 516763
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 728]
+User ID: 8084039
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 729]
+User ID: 21697039
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 732]
+User ID: 992232
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 735]
+User ID: 25125434
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 736]
+User ID: 26339910
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 738]
+User ID: 16415989
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 741]
+User ID: 13104134
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 742]
+User ID: 13153709
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 746]
+User ID: 23891724
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 747]
+User ID: 10380639
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 750]
+User ID: 12514117
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 753]
+User ID: 17010014
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 755]
+User ID: 29620027
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 756]
+User ID: 14610415
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 758]
+User ID: 29606003
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 761]
+User ID: 15020628
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 762]
+User ID: 28310003
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 765]
+User ID: 24432058
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 767]
+User ID: 1213142
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 769]
+User ID: 6319441
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 772]
+User ID: 773559
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 774]
+User ID: 12504808
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 776]
+User ID: 14621342
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 778]
+User ID: 320508
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 779]
+User ID: 7716979
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 781]
+User ID: 12306291
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 782]
+User ID: 30020336
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 784]
+User ID: 21657041
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 787]
+User ID: 17880761
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 788]
+User ID: 10379070
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 789]
+User ID: 24771290
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 791]
+User ID: 20630672
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 792]
+User ID: 1314968
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 793]
+User ID: 13479148
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 802]
+User ID: 27283445
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 804]
+User ID: 28951190
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 805]
+User ID: 5102988
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 807]
+User ID: 5737678
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 810]
+User ID: 23694124
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 811]
+User ID: 8485615
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 817]
+User ID: 8869453
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 818]
+User ID: 8287411
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 820]
+User ID: 5404159
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 822]
+User ID: 7805053
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 823]
+User ID: 13083981
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 824]
+User ID: 18229077
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 826]
+User ID: 13513355
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 829]
+User ID: 27248392
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 830]
+User ID: 19392188
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 833]
+User ID: 17868456
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 837]
+User ID: 281383
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 843]
+User ID: 12937816
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 844]
+User ID: 11786986
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 845]
+User ID: 16951092
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 846]
+User ID: 9679815
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 849]
+User ID: 29057163
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 850]
+User ID: 14479838
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 851]
+User ID: 17659838
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 852]
+User ID: 23604562
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 853]
+User ID: 10025602
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 854]
+User ID: 15896209
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 855]
+User ID: 20934660
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 858]
+User ID: 17344402
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 859]
+User ID: 30656691
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 860]
+User ID: 13192887
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 863]
+User ID: 26137644
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 864]
+User ID: 7159410
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 868]
+User ID: 7665145
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 869]
+User ID: 27600375
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 877]
+User ID: 23573460
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 880]
+User ID: 23412717
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 883]
+User ID: 28822160
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 885]
+User ID: 13803519
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 890]
+User ID: 20773340
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 892]
+User ID: 22558458
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 894]
+User ID: 28612612
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 896]
+User ID: 12679142
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 897]
+User ID: 19235415
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 899]
+User ID: 11904926
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 900]
+User ID: 11007036
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 902]
+User ID: 8101360
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 903]
+User ID: 13597484
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 905]
+User ID: 20746681
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 906]
+User ID: 460651
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 910]
+User ID: 17522123
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 913]
+User ID: 411269
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 917]
+User ID: 7310756
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 919]
+User ID: 28622945
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 922]
+User ID: 25804230
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 924]
+User ID: 18189883
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 925]
+User ID: 12272392
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 929]
+User ID: 17535518
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 932]
+User ID: 16800826
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 933]
+User ID: 17308827
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 941]
+User ID: 16259813
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 943]
+User ID: 21402519
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 946]
+User ID: 8819910
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 947]
+User ID: 9777461
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 954]
+User ID: 6436166
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 955]
+User ID: 29344908
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 956]
+User ID: 27282547
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 959]
+User ID: 18619631
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 960]
+User ID: 22884219
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 962]
+User ID: 17460287
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 963]
+User ID: 11110098
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 964]
+User ID: 27271704
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 966]
+User ID: 10707999
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 967]
+User ID: 19536589
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 968]
+User ID: 26546810
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 971]
+User ID: 7619398
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 973]
+User ID: 12797035
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 974]
+User ID: 5984237
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 975]
+User ID: 26367684
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 977]
+User ID: 1800728
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 981]
+User ID: 7840164
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 989]
+User ID: 9706276
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 990]
+User ID: 18382359
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 994]
+User ID: 16093437
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 996]
+User ID: 20479748
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 998]
+User ID: 20294031
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 999]
+User ID: 18204126
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1000]
+User ID: 15556048
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1002]
+User ID: 20580073
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1003]
+User ID: 21413609
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1005]
+User ID: 2207361
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1009]
+User ID: 21354751
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1013]
+User ID: 13635090
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1017]
+User ID: 28178161
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1018]
+User ID: 27754411
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1019]
+User ID: 8240916
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1022]
+User ID: 16372288
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1024]
+User ID: 16302128
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1025]
+User ID: 17522260
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1026]
+User ID: 12451100
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1031]
+User ID: 13590130
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1033]
+User ID: 13866348
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1034]
+User ID: 17444990
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1036]
+User ID: 16492585
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1037]
+User ID: 13645740
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1038]
+User ID: 12707230
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1041]
+User ID: 18671497
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1042]
+User ID: 27594864
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1044]
+User ID: 19282283
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1045]
+User ID: 15223318
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1048]
+User ID: 1968824
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1050]
+User ID: 13502310
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1054]
+User ID: 7357473
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1055]
+User ID: 8036643
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1056]
+User ID: 7646236
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1059]
+User ID: 9863125
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1061]
+User ID: 8717120
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1063]
+User ID: 397050
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1064]
+User ID: 7616037
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1067]
+User ID: 10917176
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1068]
+User ID: 14653444
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1070]
+User ID: 10253524
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1073]
+User ID: 16079603
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1076]
+User ID: 15971188
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1077]
+User ID: 15580412
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1080]
+User ID: 21620212
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1081]
+User ID: 15017630
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1082]
+User ID: 18163891
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1083]
+User ID: 5150335
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1084]
+User ID: 11786813
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1085]
+User ID: 16522363
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1086]
+User ID: 16196970
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1088]
+User ID: 19627278
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1089]
+User ID: 21735982
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1090]
+User ID: 21882655
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1091]
+User ID: 19402584
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1093]
+User ID: 1195798
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1094]
+User ID: 18868163
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1095]
+User ID: 11557692
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1096]
+User ID: 13912557
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1097]
+User ID: 1625907
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1098]
+User ID: 22025258
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1103]
+User ID: 22245867
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1106]
+User ID: 586817
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1108]
+User ID: 19759845
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1114]
+User ID: 10216564
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1118]
+User ID: 30673112
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1122]
+User ID: 30182843
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1123]
+User ID: 12891532
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1124]
+User ID: 26394007
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1125]
+User ID: 12714674
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1126]
+User ID: 24595405
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1129]
+User ID: 12486717
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1133]
+User ID: 7149207
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1134]
+User ID: 19900702
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1137]
+User ID: 25669416
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1142]
+User ID: 13196895
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1146]
+User ID: 10960800
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1147]
+User ID: 19104908
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1149]
+User ID: 9663588
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1151]
+User ID: 17089497
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1154]
+User ID: 8125370
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1157]
+User ID: 1625522
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1161]
+User ID: 5293942
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1162]
+User ID: 9921176
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1164]
+User ID: 21859630
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1165]
+User ID: 24663717
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1167]
+User ID: 23783590
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1168]
+User ID: 8066566
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1169]
+User ID: 14440579
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1171]
+User ID: 26144940
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1173]
+User ID: 26639229
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1175]
+User ID: 15109609
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1176]
+User ID: 25376109
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1177]
+User ID: 14202761
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1178]
+User ID: 19663687
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1180]
+User ID: 22772228
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1181]
+User ID: 24973852
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1183]
+User ID: 1521661
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1184]
+User ID: 15783986
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1186]
+User ID: 27753635
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1187]
+User ID: 9889423
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1188]
+User ID: 20732606
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1190]
+User ID: 29666777
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1193]
+User ID: 21972271
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1194]
+User ID: 11787592
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1196]
+User ID: 28543116
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1200]
+User ID: 15416849
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1205]
+User ID: 18405396
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1208]
+User ID: 19539389
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1209]
+User ID: 17210152
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1211]
+User ID: 26167030
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1214]
+User ID: 28718054
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1215]
+User ID: 10335805
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1217]
+User ID: 6673943
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1218]
+User ID: 8705004
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1220]
+User ID: 15221357
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1222]
+User ID: 20435086
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1225]
+User ID: 22773049
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1226]
+User ID: 20100715
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1228]
+User ID: 15658950
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1229]
+User ID: 30375777
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1232]
+User ID: 15496789
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1235]
+User ID: 5782244
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1237]
+User ID: 14354705
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1238]
+User ID: 15179377
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1239]
+User ID: 15632989
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1240]
+User ID: 15643619
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1241]
+User ID: 15643174
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1243]
+User ID: 263702
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1244]
+User ID: 23352183
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1248]
+User ID: 565135
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1249]
+User ID: 13957233
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1250]
+User ID: 11319634
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1251]
+User ID: 26330488
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1252]
+User ID: 19350168
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1254]
+User ID: 29580501
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1255]
+User ID: 18231243
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1256]
+User ID: 29966821
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1261]
+User ID: 26998628
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1263]
+User ID: 15224548
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1264]
+User ID: 10624315
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1267]
+User ID: 19310941
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1272]
+User ID: 12415122
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1273]
+User ID: 8293862
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1274]
+User ID: 12947695
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1276]
+User ID: 7884281
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1277]
+User ID: 26154830
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1278]
+User ID: 1569017
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1281]
+User ID: 29732012
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1283]
+User ID: 27292569
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1286]
+User ID: 9890188
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1287]
+User ID: 16855148
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1289]
+User ID: 13459133
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1290]
+User ID: 24225115
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1291]
+User ID: 11956819
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1294]
+User ID: 16235658
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1298]
+User ID: 17970166
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1300]
+User ID: 9205488
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1303]
+User ID: 373117
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1304]
+User ID: 1444912
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1305]
+User ID: 19287165
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1307]
+User ID: 8680412
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1312]
+User ID: 1865487
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1313]
+User ID: 7564725
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1314]
+User ID: 6454376
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1316]
+User ID: 20895858
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1317]
+User ID: 6382787
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1319]
+User ID: 21904807
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1321]
+User ID: 7845993
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1324]
+User ID: 29845491
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1327]
+User ID: 28107171
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1328]
+User ID: 29865014
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1333]
+User ID: 10792227
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1335]
+User ID: 30626530
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1338]
+User ID: 5164910
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1341]
+User ID: 1423769
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1342]
+User ID: 29342923
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1343]
+User ID: 16823296
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1344]
+User ID: 27248044
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1345]
+User ID: 18025738
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1346]
+User ID: 17647387
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1347]
+User ID: 30113976
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1350]
+User ID: 17723038
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1351]
+User ID: 9797961
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1352]
+User ID: 14017763
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1358]
+User ID: 24817352
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1360]
+User ID: 8131869
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1362]
+User ID: 10069830
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1366]
+User ID: 18658262
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1372]
+User ID: 1932246
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1374]
+User ID: 21848805
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1375]
+User ID: 28718509
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1376]
+User ID: 8212549
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1377]
+User ID: 5195993
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1380]
+User ID: 2083234
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1383]
+User ID: 26717862
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1384]
+User ID: 20706292
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1385]
+User ID: 22392568
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1386]
+User ID: 12654773
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1388]
+User ID: 1187041
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1389]
+User ID: 6793369
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1390]
+User ID: 331351
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1392]
+User ID: 28132980
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1393]
+User ID: 28354353
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1397]
+User ID: 18154168
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1398]
+User ID: 6314798
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1399]
+User ID: 6943333
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1400]
+User ID: 13856904
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1401]
+User ID: 17948012
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1405]
+User ID: 19012310
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1406]
+User ID: 16448816
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1407]
+User ID: 11796500
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1409]
+User ID: 14401926
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1410]
+User ID: 421987
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1411]
+User ID: 29350256
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1412]
+User ID: 14585901
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1414]
+User ID: 27721192
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1416]
+User ID: 6073357
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1420]
+User ID: 27842781
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1422]
+User ID: 13255131
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1425]
+User ID: 173946
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1426]
+User ID: 16067118
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1429]
+User ID: 7419164
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1430]
+User ID: 24804995
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1433]
+User ID: 12883357
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1434]
+User ID: 17135803
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1436]
+User ID: 249400
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1437]
+User ID: 19197229
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1438]
+User ID: 27837881
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1439]
+User ID: 20067956
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1440]
+User ID: 17475839
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1441]
+User ID: 5129259
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1442]
+User ID: 20618822
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1444]
+User ID: 6490260
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1445]
+User ID: 17446136
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1446]
+User ID: 30466073
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1447]
+User ID: 16435921
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1453]
+User ID: 25550791
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1458]
+User ID: 25007664
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1459]
+User ID: 18537316
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1461]
+User ID: 8247286
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1462]
+User ID: 27989859
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1463]
+User ID: 24780958
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1468]
+User ID: 943747
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1470]
+User ID: 8758557
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1471]
+User ID: 8256736
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1477]
+User ID: 27673241
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1480]
+User ID: 16342968
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1481]
+User ID: 309894
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1482]
+User ID: 432271
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1483]
+User ID: 6935487
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1484]
+User ID: 20328263
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1485]
+User ID: 13810030
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1488]
+User ID: 8249819
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1489]
+User ID: 12897718
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1492]
+User ID: 1291005
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1493]
+User ID: 9147220
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1495]
+User ID: 914748
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1497]
+User ID: 10627124
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1499]
+User ID: 17883932
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1501]
+User ID: 11453884
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1506]
+User ID: 10218122
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1508]
+User ID: 18119297
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1509]
+User ID: 19823132
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1510]
+User ID: 14558656
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1511]
+User ID: 18547921
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1515]
+User ID: 18950126
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1517]
+User ID: 17520442
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1519]
+User ID: 254732
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1521]
+User ID: 18263405
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1522]
+User ID: 27422830
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1523]
+User ID: 27637905
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1526]
+User ID: 19488086
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1527]
+User ID: 13913697
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1530]
+User ID: 19682376
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1531]
+User ID: 13687992
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1534]
+User ID: 1005738
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1535]
+User ID: 1398249
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1536]
+User ID: 22516016
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1537]
+User ID: 18157161
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1539]
+User ID: 7164347
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1541]
+User ID: 17328463
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1546]
+User ID: 15095092
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1550]
+User ID: 26074686
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1551]
+User ID: 26252391
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1552]
+User ID: 8600723
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1554]
+User ID: 30275211
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1556]
+User ID: 7891343
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1564]
+User ID: 1194322
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1565]
+User ID: 8221679
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1569]
+User ID: 16538861
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1573]
+User ID: 22456904
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1575]
+User ID: 17158964
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1577]
+User ID: 16789265
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1579]
+User ID: 18339620
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1582]
+User ID: 494961
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1584]
+User ID: 22047115
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1587]
+User ID: 7734673
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1588]
+User ID: 25139026
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1589]
+User ID: 7460420
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1590]
+User ID: 25991775
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1591]
+User ID: 27851372
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1595]
+User ID: 30082206
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1596]
+User ID: 11373559
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1600]
+User ID: 30401014
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1602]
+User ID: 20978209
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1603]
+User ID: 23359168
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1604]
+User ID: 23942904
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1610]
+User ID: 19048964
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1611]
+User ID: 782963
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1612]
+User ID: 23943724
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1614]
+User ID: 6115949
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1618]
+User ID: 29674440
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1620]
+User ID: 1545575
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1623]
+User ID: 22099046
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1624]
+User ID: 30150146
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1627]
+User ID: 1441758
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1628]
+User ID: 11670002
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1631]
+User ID: 7944955
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1632]
+User ID: 16999091
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1635]
+User ID: 14444120
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1636]
+User ID: 26529713
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1637]
+User ID: 11968597
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1640]
+User ID: 15371773
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1646]
+User ID: 9566510
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1647]
+User ID: 18563089
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1649]
+User ID: 21293155
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1653]
+User ID: 19197438
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1654]
+User ID: 28056138
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1659]
+User ID: 7515341
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1661]
+User ID: 16467168
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1663]
+User ID: 22082342
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1665]
+User ID: 12786020
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1667]
+User ID: 9720982
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1670]
+User ID: 17354956
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1671]
+User ID: 17680901
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1673]
+User ID: 12235671
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1675]
+User ID: 14396732
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1678]
+User ID: 29539549
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1679]
+User ID: 8006264
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1680]
+User ID: 8727874
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1684]
+User ID: 15129645
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1685]
+User ID: 584282
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1688]
+User ID: 24691989
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1691]
+User ID: 5966793
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1692]
+User ID: 12840340
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1694]
+User ID: 11803940
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1696]
+User ID: 1473085
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1697]
+User ID: 22950113
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1699]
+User ID: 23478619
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1702]
+User ID: 21241861
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1704]
+User ID: 8560276
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1711]
+User ID: 7484018
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1712]
+User ID: 17024667
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1717]
+User ID: 15031678
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1719]
+User ID: 18083721
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1720]
+User ID: 29938125
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1721]
+User ID: 15063215
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1723]
+User ID: 12362440
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1724]
+User ID: 18454859
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1727]
+User ID: 14595803
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1745]
+User ID: 17508394
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1746]
+User ID: 24579899
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1747]
+User ID: 27614571
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1749]
+User ID: 18030555
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1750]
+User ID: 12604519
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1752]
+User ID: 24435925
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1754]
+User ID: 19318925
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1755]
+User ID: 1087841
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1759]
+User ID: 5233884
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1760]
+User ID: 17132451
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1761]
+User ID: 16718459
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1762]
+User ID: 14673909
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1764]
+User ID: 7779196
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1768]
+User ID: 13128272
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1770]
+User ID: 14678509
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1772]
+User ID: 15132585
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1774]
+User ID: 5509037
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1776]
+User ID: 10969910
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1777]
+User ID: 19350498
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1778]
+User ID: 2181583
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1780]
+User ID: 19549419
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1782]
+User ID: 26315060
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1784]
+User ID: 7057010
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1785]
+User ID: 14360319
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+[Row 1787]
+User ID: 18433588
+Reason: User ID không tồn tại trong database
+----------------------------------------------------------------------
+
+======================================================================
+IMPORT AVATAR SUMMARY
+======================================================================
+Total CSV unique: 1787
+Duplicate removed: 3097
+Success: 1031
+Skip: 756
+
+SKIP REASONS
+----------------------------------------------------------------------
+User not found: 756
+======================================================================
