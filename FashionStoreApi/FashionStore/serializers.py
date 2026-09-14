@@ -10,7 +10,8 @@ from FashionStore.models import (
     Rating,
     Order,
     OrderDetail,
-    Payment
+    Payment,
+    Discount
 )
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
@@ -236,11 +237,12 @@ class OrderSerializer(serializers.ModelSerializer):
     cart_item_ids = serializers.ListField(child=serializers.IntegerField(min_value=1), write_only=True, required=True, allow_empty=False)
     shipping_address = serializers.CharField(required=True, allow_blank=False)
     phone = serializers.CharField(required=True,allow_blank=False,max_length=20)
-    payment_method = serializers.ChoiceField(choices=Payment.Method.choices, write_only=True, required=True)
+    payment_method = serializers.ChoiceField(choices=Payment.Method.choices, write_only=True)
+    payment_method_display = serializers.CharField(source="payment.method", read_only=True)
     payment_status = serializers.CharField(source="payment.status", read_only=True)
     class Meta:
         model = Order
-        fields = ["id", "shipping_address", "payment_method", "payment_status", "total_amount", "status", "created_date", "phone", "cart_item_ids", "username"]
+        fields = ["id", "shipping_address", "payment_method", "payment_status", "payment_method_display", "total_amount", "status", "created_date", "phone", "cart_item_ids", "username"]
         read_only_fields = ["id", "total_amount", "status", "created_date"]
 
 class OrderDetailSerializer(serializers.ModelSerializer):
@@ -282,6 +284,40 @@ class CreateOrderFromCartItemSerializer(serializers.Serializer):
                 "Shipping address is required."
             )
         return value.strip()
+
+class DiscountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Discount
+        fields = ["id", "code", "value", "min_order_value", "max_discount", "usage_limit", "used_count", "start_date", "end_date", "is_active"]
+        read_only_fields = ["id", "used_count"]
+
+    def validate(self, data):
+        value = data.get("value", getattr(self.instance, "value", None))
+        min_order_value = data.get("min_order_value", getattr(self.instance, "min_order_value", 0))
+        max_discount = data.get("max_discount", getattr(self.instance, "max_discount", None))
+        usage_limit = data.get("usage_limit", getattr(self.instance, "usage_limit", None))
+        start_date = data.get("start_date", getattr(self.instance, "start_date", None))
+        end_date = data.get("end_date", getattr(self.instance, "end_date", None))
+
+        if value <= 0 or value > 100:
+            raise serializers.ValidationError({"value": "Discount percentage must be between 0 and 100."})
+        if min_order_value < 0:
+            raise serializers.ValidationError({"min_order_value": "Minimum order value cannot be negative."})
+        if max_discount is not None and max_discount <= 0:
+            raise serializers.ValidationError({"max_discount": "Maximum discount must be greater than 0."})
+        if usage_limit is not None and usage_limit <= 0:
+            raise serializers.ValidationError({"usage_limit": "Usage limit must be greater than 0."})
+        if start_date and end_date and start_date >= end_date:
+            raise serializers.ValidationError({"end_date": "End date must be after start date."})
+        return data
+
+class AvailableDiscountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Discount
+        fields = ["id", "code", "value", "min_order_value", "max_discount", "start_date", "end_date"]
+
+class SelectDiscountSerializer(serializers.Serializer):
+    discount_id = serializers.CharField()
 
 class DashboardDateSerializer(serializers.Serializer):
     date_from = serializers.DateField(

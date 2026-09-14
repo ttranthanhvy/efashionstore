@@ -21,6 +21,7 @@ import StaffOrder from "./screens/Staff/Order";
 import StaffProduct from "./screens/Staff/Product";
 import StaffProductDetail from "./screens/Staff/ProductDetail";
 import StaffInventory from "./screens/Staff/Inventory";
+import StaffDiscount from "./screens/Staff/Discount";
 
 const App = () => {
   const [user, dispatch] = useReducer(
@@ -50,6 +51,7 @@ const App = () => {
           <Route path="/staff/products" element={<StaffProduct />} />
           <Route path="/staff/products/:productId" element={<StaffProductDetail />} />
           <Route path="/staff/inventory" element={<StaffInventory />} /> 
+          <Route path="/staff/discounts" element={<StaffDiscount />} />
 
         </Routes>
 

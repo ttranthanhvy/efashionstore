@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button, Image, Spinner, Form } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Image, Spinner, Form, Alert } from "react-bootstrap";
 import { FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Apis, { endpoints } from "../../configs/Apis";
@@ -10,6 +10,11 @@ const Cart = () => {
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
+    const [discounts, setDiscounts] = useState([]);
+    const [selectedDiscountId, setSelectedDiscountId] = useState("");
+    const [discountAmount, setDiscountAmount] = useState(0);
+    const [discountLoading, setDiscountLoading] = useState(false);
+    const [discountMessage, setDiscountMessage] = useState("");
 
     const loadCart = async () => {
         try {
@@ -22,9 +27,29 @@ const Cart = () => {
         }
     };
 
+    const loadDiscounts = async () => {
+        try {
+            const res = await Apis.get(endpoints["available-discounts"]);
+            setDiscounts(res.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     useEffect(() => {
         loadCart();
     }, []);
+
+    useEffect(() => {
+        if (selectedItems.length > 0) {
+            loadDiscounts();
+        } else {
+            setDiscounts([]);
+            setSelectedDiscountId("");
+            setDiscountAmount(0);
+            setDiscountMessage("");
+        }
+    }, [selectedItems.length]);
 
     const getImageUrl = (image) => {
         if (!image) return "";
@@ -32,27 +57,20 @@ const Cart = () => {
         return `https://res.cloudinary.com/kcord2gk/${image}`;
     };
 
-    const formatPrice = (price) => {
-        return Number(price || 0).toLocaleString("vi-VN") + " ₫";
-    };
+    const formatPrice = (price) => Number(price || 0).toLocaleString("vi-VN") + " ₫";
 
     const updateQuantity = async (item, newQuantity) => {
         if (newQuantity < 1) return;
-
         if (newQuantity > item.stock) {
             alert(`Chỉ còn ${item.stock} sản phẩm trong kho`);
             return;
         }
-
         try {
             setUpdating(item.id);
             const res = await Apis.patch(`${endpoints.cart}items/${item.id}/`, { quantity: newQuantity });
-
             setCart((prev) => ({
                 ...prev,
-                items: prev.items.map((i) =>
-                    i.id === item.id ? { ...i, quantity: res.data.quantity } : i
-                )
+                items: prev.items.map((i) => i.id === item.id ? { ...i, quantity: res.data.quantity } : i)
             }));
         } catch (error) {
             alert(error.response?.data?.detail || "Không thể cập nhật số lượng");
@@ -64,15 +82,12 @@ const Cart = () => {
     const removeItem = async (id) => {
         const confirmed = window.confirm("Bạn có chắc muốn xóa sản phẩm này không?");
         if (!confirmed) return;
-
         try {
             await Apis.delete(`${endpoints.cart}items/${id}/`);
-
             setCart((prev) => ({
                 ...prev,
                 items: prev.items.filter((item) => item.id !== id)
             }));
-
             setSelectedItems((prev) => prev.filter((itemId) => itemId !== id));
         } catch (error) {
             alert(error.response?.data?.detail || "Không thể xóa sản phẩm");
@@ -94,7 +109,6 @@ const Cart = () => {
 
     const toggleAll = () => {
         if (!cart?.items?.length) return;
-
         if (selectedItems.length === cart.items.length) {
             setSelectedItems([]);
         } else {
@@ -102,19 +116,51 @@ const Cart = () => {
         }
     };
 
-    const selectedCartItems = cart?.items?.filter((item) =>
-        selectedItems.includes(item.id)
-    ) || [];
+    const selectedCartItems = cart?.items?.filter((item) => selectedItems.includes(item.id)) || [];
 
     const totalQuantity = selectedCartItems.reduce(
-        (total, item) => total + Number(item.quantity || 0),
-        0
+        (total, item) => total + Number(item.quantity || 0), 0
     );
 
     const totalPrice = selectedCartItems.reduce(
-        (total, item) => total + Number(item.price || 0) * Number(item.quantity || 0),
-        0
+        (total, item) => total + Number(item.price || 0) * Number(item.quantity || 0), 0
     );
+
+    const finalTotal = totalPrice - discountAmount;
+
+    const handleSelectDiscount = async (discountId) => {
+        setSelectedDiscountId(discountId);
+        setDiscountAmount(0);
+        setDiscountMessage("");
+
+        if (!discountId) return;
+
+        const discount = discounts.find((item) => item.id === discountId);
+
+        if (discount && totalPrice < Number(discount.min_order_value || 0)) {
+            setSelectedDiscountId("");
+            setDiscountMessage(`Mã ${discount.code} chỉ áp dụng cho đơn hàng từ ${formatPrice(discount.min_order_value)}.`);
+            return;
+        }
+
+        try {
+            setDiscountLoading(true);
+
+            const res = await Apis.post(endpoints["select-discount"], {
+                discount_id: discountId,
+                order_amount: totalPrice
+            });
+
+            setDiscountAmount(Number(res.data.discount_amount || 0));
+            setDiscountMessage(`Đã áp dụng mã ${res.data.code}.`);
+        } catch (error) {
+            setSelectedDiscountId("");
+            setDiscountAmount(0);
+            setDiscountMessage(error.response?.data?.detail || "Không thể áp dụng mã giảm giá.");
+        } finally {
+            setDiscountLoading(false);
+        }
+    };
 
     const handleCheckout = () => {
         if (selectedItems.length === 0) {
@@ -128,7 +174,9 @@ const Cart = () => {
                 cartItemIds: selectedItems,
                 selectedItems: selectedCartItems,
                 totalQuantity,
-                totalPrice
+                totalPrice,
+                discountId: selectedDiscountId,
+                discountAmount
             }
         });
     };
@@ -160,7 +208,6 @@ const Cart = () => {
     return (
         <Container className="py-4">
             <h3 className="fw-bold mb-4">Giỏ hàng</h3>
-
             <Row>
                 <Col md={8}>
                     <Card className="border-0 shadow-sm mb-3">
@@ -188,45 +235,23 @@ const Cart = () => {
                                     </Col>
 
                                     <Col xs={3} md={2}>
-                                        <div
-                                            onClick={() => goToProduct(item.product_id)}
-                                            style={{ cursor: "pointer" }}
-                                        >
-                                            <Image
-                                                src={getImageUrl(item.thumbnail)}
-                                                fluid
-                                                rounded
-                                                style={{
-                                                    width: "100px",
-                                                    height: "120px",
-                                                    objectFit: "contain"
-                                                }}
-                                            />
+                                        <div onClick={() => goToProduct(item.product_id)} style={{ cursor: "pointer" }}>
+                                            <Image src={getImageUrl(item.thumbnail)} fluid rounded style={{ width: "100px", height: "120px", objectFit: "contain" }} />
                                         </div>
                                     </Col>
 
                                     <Col xs={8} md={5}>
-                                        <h5
-                                            className="fw-bold mb-2"
-                                            onClick={() => goToProduct(item.product_id)}
-                                            style={{ cursor: "pointer" }}
-                                        >
+                                        <h5 className="fw-bold mb-2" onClick={() => goToProduct(item.product_id)} style={{ cursor: "pointer" }}>
                                             {item.product_name || `Sản phẩm #${item.product_variant}`}
                                         </h5>
 
                                         <p className="text-muted mb-1">
-                                            Phân loại: {item.color || "-"}
-                                            {item.color && item.size && " / "}
-                                            {item.size || ""}
+                                            Phân loại: {item.color || "-"}{item.color && item.size && " / "}{item.size || ""}
                                         </p>
 
-                                        <p className="text-danger fw-bold mb-1">
-                                            {formatPrice(item.price)}
-                                        </p>
+                                        <p className="text-danger fw-bold mb-1">{formatPrice(item.price)}</p>
 
-                                        <p className="text-muted mb-3">
-                                            Còn <strong>{item.stock}</strong> sản phẩm
-                                        </p>
+                                        <p className="text-muted mb-3">Còn <strong>{item.stock}</strong> sản phẩm</p>
 
                                         <div className="d-flex align-items-center">
                                             <Button
@@ -239,20 +264,8 @@ const Cart = () => {
                                                 −
                                             </Button>
 
-                                            <div
-                                                className="d-flex justify-content-center align-items-center"
-                                                style={{
-                                                    width: "45px",
-                                                    height: "35px",
-                                                    borderTop: "1px solid #dee2e6",
-                                                    borderBottom: "1px solid #dee2e6"
-                                                }}
-                                            >
-                                                {updating === item.id ? (
-                                                    <Spinner animation="border" size="sm" />
-                                                ) : (
-                                                    item.quantity
-                                                )}
+                                            <div className="d-flex justify-content-center align-items-center" style={{ width: "45px", height: "35px", borderTop: "1px solid #dee2e6", borderBottom: "1px solid #dee2e6" }}>
+                                                {updating === item.id ? <Spinner animation="border" size="sm" /> : item.quantity}
                                             </div>
 
                                             <Button
@@ -268,19 +281,9 @@ const Cart = () => {
                                     </Col>
 
                                     <Col md={4} className="text-end mt-3 mt-md-0">
-                                        <p className="text-muted mb-1">
-                                            {formatPrice(item.price)} × {item.quantity}
-                                        </p>
-
-                                        <h5 className="text-danger fw-bold mb-3">
-                                            {formatPrice(Number(item.price) * Number(item.quantity))}
-                                        </h5>
-
-                                        <Button
-                                            variant="outline-danger"
-                                            size="sm"
-                                            onClick={() => removeItem(item.id)}
-                                        >
+                                        <p className="text-muted mb-1">{formatPrice(item.price)} × {item.quantity}</p>
+                                        <h5 className="text-danger fw-bold mb-3">{formatPrice(Number(item.price) * Number(item.quantity))}</h5>
+                                        <Button variant="outline-danger" size="sm" onClick={() => removeItem(item.id)}>
                                             <FaTrashAlt className="me-1" />
                                             Xóa
                                         </Button>
@@ -306,21 +309,60 @@ const Cart = () => {
                                 <strong>{formatPrice(totalPrice)}</strong>
                             </div>
 
+                            {selectedItems.length > 0 && (
+                                <Form.Group className="mb-3">
+                                    <Form.Label className="fw-semibold">Mã giảm giá</Form.Label>
+                                    <Form.Select
+                                        value={selectedDiscountId}
+                                        onChange={(e) => handleSelectDiscount(e.target.value)}
+                                        disabled={discountLoading}
+                                    >
+                                        <option value="">Không sử dụng mã giảm giá</option>
+                                        {discounts.map((discount) => (
+                                            <option key={discount.id} value={discount.id}>
+                                                {discount.code} - Giảm {discount.value}% {Number(discount.min_order_value || 0) > 0 ? `- Đơn từ ${Number(discount.min_order_value).toLocaleString("vi-VN")} ₫` : ""}
+                                            </option>
+                                        ))}
+                                    </Form.Select>
+
+                                    {discounts.length === 0 && (
+                                        <small className="text-muted">Hiện không có mã giảm giá khả dụng.</small>
+                                    )}
+
+                                    {discountLoading && (
+                                        <small className="text-muted d-block mt-1">Đang áp dụng mã giảm giá...</small>
+                                    )}
+
+                                    {discountMessage && (
+                                        <Alert variant={discountAmount > 0 ? "success" : "danger"} className="py-2 mt-2 mb-0">
+                                            {discountMessage}
+                                        </Alert>
+                                    )}
+                                </Form.Group>
+                            )}
+
+                            {discountAmount > 0 && (
+                                <div className="d-flex justify-content-between mb-3 text-success">
+                                    <span>Giảm giá</span>
+                                    <strong>-{formatPrice(discountAmount)}</strong>
+                                </div>
+                            )}
+
                             <hr />
 
                             <div className="d-flex justify-content-between align-items-center mb-4">
                                 <span className="fw-bold">Tổng tiền</span>
-                                <h4 className="text-danger fw-bold mb-0">{formatPrice(totalPrice)}</h4>
+                                <h4 className="text-danger fw-bold mb-0">{formatPrice(finalTotal)}</h4>
                             </div>
 
                             <Button
                                 variant="danger"
                                 size="lg"
                                 className="w-100"
-                                disabled={selectedItems.length === 0}
+                                disabled={selectedItems.length === 0 || discountLoading}
                                 onClick={handleCheckout}
                             >
-                                Tiến hành đặt hàng
+                                Đặt hàng
                             </Button>
                         </Card.Body>
                     </Card>

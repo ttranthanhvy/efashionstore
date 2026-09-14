@@ -24,7 +24,7 @@ export const endpoints = {
     "cart-items": "/secure/cart/items/",
 
     orders: "/secure/orders/",
-    "order-details": (orderId) => `/secure/orders/${orderId}/details/`,
+    "order-details": (orderId) => `/secure/orders/${orderId}/`,
     "variant-orders": (variantId) => `/variant/${variantId}/orders/`,
     vnpay: "/secure/payments/vnpay/",
 
@@ -40,6 +40,10 @@ export const endpoints = {
     "staff-restock": "/secure/staff/variant/restock/",
     "staff-inventory": (id) => `/secure/staff/variant/${id}/inventory/`,
     "staff-variant": (id) => `/secure/staff/variant/${id}/`,
+    "staff-discounts": "/secure/staff/discount/",
+    "staff-discount": (id) => `/secure/staff/discount/${id}/`,
+    "available-discounts": "/secure/discount/available/",
+    "select-discount": "/secure/discount/select/",
 };
 
 const Api = axios.create({

@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser
 from cloudinary.models import CloudinaryField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
+import random
+import string
 
 
 # Create your models here.
@@ -63,12 +65,31 @@ class ProductVariant(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
+def generate_discount_id():
+    return "DIS" + "".join(random.choices(string.ascii_uppercase + string.digits, k=9))
 
+class Discount(models.Model):
+    id = models.CharField(max_length=12, primary_key=True, editable=False, default=generate_discount_id)
+    code = models.CharField(max_length=50, unique=True)
+    value = models.DecimalField(max_digits=5, decimal_places=2)
+    min_order_value = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    max_discount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    usage_limit = models.PositiveIntegerField(null=True, blank=True)
+    used_count = models.PositiveIntegerField(default=0)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    is_active = models.BooleanField(default=True)
+
+def generate_order_code():
+    return "ORD" + "".join(random.choices(string.ascii_uppercase + string.digits, k=9))
 class Order(models.Model):
+    id = models.CharField(max_length=12, primary_key=True, editable=False, default=generate_order_code)
     shipping_address = models.CharField(max_length=500)
     phone = models.CharField(max_length=20)
     total_amount = models.DecimalField(max_digits=12, decimal_places=2)
     created_date = models.DateTimeField(auto_now_add=True)
+    discount = models.ForeignKey("Discount", on_delete=models.SET_NULL, null=True, blank=True, related_name="orders")
+    discount_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     
     class Status(models.TextChoices):
         PENDING = "PENDING", "Pending"

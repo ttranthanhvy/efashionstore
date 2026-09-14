@@ -12,6 +12,7 @@ from .models import (
     Order,
     OrderDetail,
     Payment,
+    Discount
 )
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -21,7 +22,7 @@ from django.db import models, transaction
 from django.db.models import Sum, Count, F, Avg
 from django.db.models.functions import TruncMonth, TruncQuarter, TruncYear
 from decimal import Decimal, InvalidOperation
-
+from django.utils import timezone
 from .vnpay import verify_vnpay_signature, build_vnpay_payment_url
 
 
@@ -278,12 +279,7 @@ class VariantViewset(viewsets.ViewSet, generics.RetrieveAPIView):
     serializer_class = serializers.VariantSerializer
     permission_classes = [permissions.AllowAny]
 
-    @action(
-        detail=True,
-        methods=["post"],
-        url_path="orders",
-        permission_classes=[perms.IsCustomer],
-    )
+    @action(detail=True, methods=["post"], url_path="orders", permission_classes=[perms.IsCustomer])
     @transaction.atomic
     def create_order(self, request, pk=None):
         serializer = serializers.CreateOrderFromCartItemSerializer(data=request.data)
@@ -293,16 +289,12 @@ class VariantViewset(viewsets.ViewSet, generics.RetrieveAPIView):
         shipping_address = serializer.validated_data["shipping_address"]
         phone = serializer.validated_data["phone"]
         payment_method = serializer.validated_data["payment_method"]
+        discount_id = request.data.get("discount_id")
 
         try:
-            variant = ProductVariant.objects.select_related("product").get(
-                pk=pk, is_active=True
-            )
+            variant = ProductVariant.objects.select_related("product").get(pk=pk, is_active=True)
         except ProductVariant.DoesNotExist:
-            return Response(
-                {"detail": "Product variant not found."},
-                status=status.HTTP_404_NOT_FOUND,
-            )
+            return Response({"detail": "Product variant not found."}, status=status.HTTP_404_NOT_FOUND)
 
         try:
             order = services.create_order(
@@ -312,6 +304,7 @@ class VariantViewset(viewsets.ViewSet, generics.RetrieveAPIView):
                 shipping_address=shipping_address,
                 phone=phone,
                 payment_method=payment_method,
+                discount_id=discount_id,
             )
         except ValueError as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -325,8 +318,6 @@ class VariantViewset(viewsets.ViewSet, generics.RetrieveAPIView):
             },
             status=status.HTTP_201_CREATED,
         )
-
-
 class StaffProductViewset(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = serializers.ProductSerializer
@@ -646,12 +637,14 @@ class OrderViewSet(viewsets.ViewSet):
                 shipping_address=serializer.validated_data["shipping_address"],
                 phone=serializer.validated_data["phone"],
                 payment_method=serializer.validated_data["payment_method"],
+                discount_id=request.data.get("discount_id"),
             )
         except ValueError as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(
-            serializers.OrderSerializer(order).data, status=status.HTTP_201_CREATED
+            serializers.OrderSerializer(order).data,
+            status=status.HTTP_201_CREATED
         )
 
     def retrieve(self, request, pk=None):
@@ -659,10 +652,23 @@ class OrderViewSet(viewsets.ViewSet):
 
         if not order:
             return Response(
-                {"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND
+                {"detail": "Order not found."},
+                status=status.HTTP_404_NOT_FOUND
             )
 
-        return Response(serializers.OrderSerializer(order).data)
+        order_data = serializers.OrderSerializer(order).data
+
+        details = OrderDetail.objects.filter(order=order).select_related(
+            "product_variant",
+            "product_variant__product"
+        )
+
+        order_data["details"] = serializers.OrderDetailSerializer(
+            details,
+            many=True
+        ).data
+
+        return Response(order_data, status=status.HTTP_200_OK)
 
     @action(methods=["patch"], detail=True, url_path="cancel")
     @transaction.atomic
@@ -808,6 +814,175 @@ class StaffOrderViewSet(viewsets.ViewSet):
             serializers.OrderSerializer(order).data, status=status.HTTP_200_OK
         )
 
+class StaffDiscountViewSet(viewsets.ModelViewSet):
+    queryset = Discount.objects.all().order_by("-id")
+    serializer_class = serializers.DiscountSerializer
+    permission_classes = [perms.IsStaff]
+    http_method_names = ["get", "post", "patch", "delete"]
+
+    def perform_create(self, serializer):
+        serializer.save(code=serializer.validated_data["code"].strip().upper())
+
+    def perform_update(self, serializer):
+        code = serializer.validated_data.get("code")
+        serializer.save(code=code.strip().upper() if code else serializer.instance.code)
+
+    def destroy(self, request, *args, **kwargs):
+        discount = self.get_object()
+        discount.is_active = False
+        discount.save(update_fields=["is_active"])
+        return Response({"detail": "Voucher is unactivated."}, status=status.HTTP_200_OK)
+
+
+class AvailableDiscountView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        now = timezone.now()
+        discounts = Discount.objects.filter(
+            is_active=True,
+            start_date__lte=now,
+            end_date__gte=now
+        ).filter(
+            models.Q(usage_limit__isnull=True) |
+            models.Q(used_count__lt=models.F("usage_limit"))
+        ).order_by("-id")
+
+        serializer = serializers.AvailableDiscountSerializer(discounts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class SelectDiscountView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        serializer = serializers.SelectDiscountSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        discount_id = serializer.validated_data["discount_id"]
+        order_amount = request.data.get("order_amount")
+        try:
+            order_amount = Decimal(str(order_amount))
+        except (TypeError, ValueError):
+            return Response({"detail": "Invalid order amount."}, status=status.HTTP_400_BAD_REQUEST)
+        if order_amount <= 0:
+            return Response({"detail": "Order amount must be greater than 0."}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            discount = Discount.objects.get(id=discount_id)
+        except Discount.DoesNotExist:
+            return Response({"detail": "Discount does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+        now = timezone.now()
+        if not discount.is_active:
+            return Response({"detail": "Discount is no longer active."}, status=status.HTTP_400_BAD_REQUEST)
+        if now < discount.start_date:
+            return Response({"detail": "Discount has not started yet."}, status=status.HTTP_400_BAD_REQUEST)
+        if now > discount.end_date:
+            return Response({"detail": "Discount has expired."}, status=status.HTTP_400_BAD_REQUEST)
+        if discount.usage_limit is not None and discount.used_count >= discount.usage_limit:
+            return Response({"detail": "Discount has reached its usage limit."}, status=status.HTTP_400_BAD_REQUEST)
+        if order_amount < discount.min_order_value:
+            return Response({"detail": f"Minimum order value is {discount.min_order_value:,.0f} VND."}, status=status.HTTP_400_BAD_REQUEST)
+        if discount.discount_type == Discount.DiscountType.PERCENT:
+            discount_amount = order_amount * discount.value / Decimal("100")
+            if discount.max_discount is not None:
+                discount_amount = min(discount_amount, discount.max_discount)
+        else:
+            discount_amount = discount.value
+        discount_amount = min(discount_amount, order_amount)
+        total = order_amount - discount_amount
+        return Response({"discount_id": discount.id, "code": discount.code, "discount_amount": discount_amount, "total_amount": total}, status=status.HTTP_200_OK)
+
+class StaffDiscountViewSet(viewsets.ModelViewSet):
+    queryset = Discount.objects.all().order_by("-id")
+    serializer_class = serializers.DiscountSerializer
+    permission_classes = [perms.IsStaff]
+    http_method_names = ["get", "post", "patch", "delete"]
+
+    def perform_create(self, serializer):
+        serializer.save(code=serializer.validated_data["code"].strip().upper())
+
+    def perform_update(self, serializer):
+        code = serializer.validated_data.get("code")
+        serializer.save(code=code.strip().upper() if code else serializer.instance.code)
+
+    def destroy(self, request, *args, **kwargs):
+        discount = self.get_object()
+        discount.is_active = False
+        discount.save(update_fields=["is_active"])
+        return Response({"detail": "Coupon is unactivated."}, status=status.HTTP_200_OK)
+
+
+class AvailableDiscountView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        now = timezone.now()
+        discounts = Discount.objects.filter(
+            is_active=True,
+            start_date__lte=now,
+            end_date__gte=now
+        ).filter(
+            models.Q(usage_limit__isnull=True) |
+            models.Q(used_count__lt=models.F("usage_limit"))
+        ).order_by("-id")
+        serializer = serializers.DiscountSerializer(discounts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class SelectDiscountView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        discount_id = request.data.get("discount_id")
+        order_amount = request.data.get("order_amount")
+
+        if not discount_id:
+            return Response({"detail": "Discount ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            order_amount = Decimal(str(order_amount))
+        except (TypeError, ValueError):
+            return Response({"detail": "Invalid order amount."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if order_amount <= 0:
+            return Response({"detail": "Order amount must be greater than 0."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            discount = Discount.objects.get(id=discount_id)
+        except Discount.DoesNotExist:
+            return Response({"detail": "Discount does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+
+        now = timezone.now()
+
+        if not discount.is_active:
+            return Response({"detail": "Discount is no longer active."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if now < discount.start_date:
+            return Response({"detail": "Discount has not started yet."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if now > discount.end_date:
+            return Response({"detail": "Discount has expired."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if discount.usage_limit is not None and discount.used_count >= discount.usage_limit:
+            return Response({"detail": "Discount has reached its usage limit."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if order_amount < discount.min_order_value:
+            return Response({"detail": f"Minimum order value is {discount.min_order_value:,.0f} VND."}, status=status.HTTP_400_BAD_REQUEST)
+
+        discount_amount = order_amount * discount.value / Decimal("100")
+
+        if discount.max_discount is not None:
+            discount_amount = min(discount_amount, discount.max_discount)
+
+        discount_amount = min(discount_amount, order_amount)
+        total_amount = order_amount - discount_amount
+
+        return Response({
+            "discount_id": discount.id,
+            "code": discount.code,
+            "discount_percent": discount.value,
+            "discount_amount": discount_amount,
+            "total_amount": total_amount
+        }, status=status.HTTP_200_OK)
 
 class AdminDashboardViewSet(viewsets.ViewSet):
 
@@ -828,7 +1003,6 @@ class AdminDashboardViewSet(viewsets.ViewSet):
 
     @action(methods=["get"], detail=False, url_path="revenue")
     def revenue(self, request):
-
         serializer = serializers.DashboardRevenueSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
@@ -867,7 +1041,6 @@ class AdminDashboardViewSet(viewsets.ViewSet):
                 for item in data
             ]
         else:
-
             data = (
                 orders.annotate(period_date=TruncYear("created_date"))
                 .values("period_date")
@@ -881,19 +1054,16 @@ class AdminDashboardViewSet(viewsets.ViewSet):
                 }
                 for item in data
             ]
-
         return Response({"period": period, "data": result}, status=status.HTTP_200_OK)
 
     @action(methods=["get"], detail=False, url_path="orders")
     def orders(self, request):
-
         serializer = serializers.DashboardDateSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
         orders = self.filter_orders_by_date(self.valid_orders(), data)
         result = orders.values("status").annotate(count=Count("id")).order_by("status")
         orders_by_status = {item["status"]: item["count"] for item in result}
-
         return Response(
             {"total_orders": orders.count(), "orders_by_status": orders_by_status},
             status=status.HTTP_200_OK,
@@ -901,28 +1071,18 @@ class AdminDashboardViewSet(viewsets.ViewSet):
 
     @action(methods=["get"], detail=False, url_path="top-products")
     def top_products(self, request):
-
-        serializer = serializers.DashboardTopProductSerializer(
-            data=request.query_params
-        )
+        serializer = serializers.DashboardTopProductSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
         limit = data["limit"]
         orders = self.filter_orders_by_date(self.valid_orders(), data)
         orders = orders.filter(payment__status="SUCCESS")
         details = OrderDetail.objects.filter(order__in=orders)
-
-        products = (
-            details.values(
-                "product_variant__product_id", "product_variant__product__name"
-            )
-            .annotate(
+        products = (details.values("product_variant__product_id", "product_variant__product__name").annotate(
                 quantity_sold=Sum("quantity"),
                 revenue=Sum(F("quantity") * F("unit_price")),
-            )
-            .order_by("-quantity_sold")[:limit]
+            ).order_by("-quantity_sold")[:limit]
         )
-
         result = [
             {
                 "product_id": item["product_variant__product_id"],
@@ -932,7 +1092,6 @@ class AdminDashboardViewSet(viewsets.ViewSet):
             }
             for item in products
         ]
-
         return Response({"limit": limit, "products": result}, status=status.HTTP_200_OK)
 
 
@@ -941,36 +1100,22 @@ class VNPayCreatePaymentView(APIView):
 
     def post(self, request):
         order_id = request.data.get("order_id")
-
         if not order_id:
-            return Response(
-                {"detail": "order_id is required."}, status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"detail": "order_id is required."}, status=status.HTTP_400_BAD_REQUEST)
         try:
             order = Order.objects.get(id=order_id, user=request.user)
         except Order.DoesNotExist:
-            return Response(
-                {"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND
-            )
+            return Response({"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
 
         if order.status == Order.Status.CANCELLED:
-            return Response(
-                {"detail": "Cancelled order cannot be paid."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
+            return Response({"detail": "Cancelled order cannot be paid."}, status=status.HTTP_400_BAD_REQUEST)
         try:
             payment = order.payment
         except Payment.DoesNotExist:
             payment = None
-
         if payment and payment.status == Payment.Status.PAID:
-            return Response(
-                {"detail": "Order has already been paid."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+            return Response({"detail": "Order has already been paid."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Nếu chưa có Payment thì tạo
         if payment is None:
             payment = Payment.objects.create(
                 order=order,
@@ -978,22 +1123,17 @@ class VNPayCreatePaymentView(APIView):
                 amount=order.total_amount,
                 status=Payment.Status.PENDING,
             )
-
         else:
             payment.amount = order.total_amount
             payment.method = Payment.Method.VNpay
             payment.status = Payment.Status.PENDING
             payment.save(update_fields=["amount", "method", "status"])
-
         ip_address = request.META.get("HTTP_X_FORWARDED_FOR")
-
         if ip_address:
             ip_address = ip_address.split(",")[0]
         else:
             ip_address = request.META.get("REMOTE_ADDR", "127.0.0.1")
-
         payment_url = build_vnpay_payment_url(order=order, ip_address=ip_address)
-
         return Response(
             {
                 "message": "Create VNPay payment successfully.",
@@ -1007,70 +1147,38 @@ class VNPayCreatePaymentView(APIView):
 
 
 class VNPayCallbackView(APIView):
-
     def get(self, request):
         params = request.GET.dict()
-
         if not verify_vnpay_signature(params):
-            return Response(
-                {"success": False, "message": "Invalid VNPay signature."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
+            return Response({"success": False, "message": "Invalid VNPay signature."}, status=status.HTTP_400_BAD_REQUEST)
         txn_ref = params.get("vnp_TxnRef")
         response_code = params.get("vnp_ResponseCode")
         transaction_status = params.get("vnp_TransactionStatus")
-
         if not txn_ref:
-            return Response(
-                {"success": False, "message": "Missing vnp_TxnRef."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
+            return Response({"success": False, "message": "Missing vnp_TxnRef."}, status=status.HTTP_400_BAD_REQUEST)
         try:
-            order = Order.objects.get(id=int(txn_ref))
-        except (Order.DoesNotExist, ValueError):
-            return Response(
-                {"success": False, "message": "Order not found."},
-                status=status.HTTP_404_NOT_FOUND,
-            )
+            order = Order.objects.get(id=txn_ref)
+        except Order.DoesNotExist:
+            return Response({"success": False, "message": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
         try:
             payment = order.payment
         except Payment.DoesNotExist:
-            return Response(
-                {"success": False, "message": "Payment not found."},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-
+            return Response({"success": False, "message": "Payment not found."}, status=status.HTTP_404_NOT_FOUND)
         vnp_amount = params.get("vnp_Amount")
         if not vnp_amount:
-            return Response(
-                {"success": False, "message": "Missing payment amount."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+            return Response({"success": False, "message": "Missing payment amount."}, status=status.HTTP_400_BAD_REQUEST)
         try:
             expected_amount = int(payment.amount * 100)
             received_amount = int(vnp_amount)
-
         except (ValueError, TypeError):
-            return Response(
-                {"success": False, "message": "Invalid payment amount."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
+            return Response({"success": False, "message": "Invalid payment amount."}, status=status.HTTP_400_BAD_REQUEST)
         if received_amount != expected_amount:
-            return Response(
-                {"success": False, "message": "Payment amount mismatch."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
+            return Response({"success": False, "message": "Payment amount mismatch."}, status=status.HTTP_400_BAD_REQUEST)
         if response_code == "00" and transaction_status == "00":
             if payment.status != Payment.Status.PAID:
-
                 payment.status = Payment.Status.PAID
                 payment.save(update_fields=["status"])
-                return redirect(f"http://localhost:3000/payment/success?order_id={order.id}")
-
+            return redirect(f"http://localhost:3000/payment/success?order_id={order.id}")
         payment.status = Payment.Status.FAILED
         payment.save(update_fields=["status"])
-        return redirect(f"http://localhost:3000/payment/success?order_id={order.id}")
+        return redirect(f"http://localhost:3000/payment/failed?order_id={order.id}")

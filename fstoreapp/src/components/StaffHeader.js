@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Container, Nav, Navbar, Dropdown, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { FaSearch, FaUser, FaBoxOpen, FaWarehouse, FaHome } from "react-icons/fa";
+import { FaSearch, FaUser } from "react-icons/fa";
 import cookies from "react-cookies";
 import { MyUserContext } from "../configs/Context";
 import { staffColors } from "../screens/Staff/StaffStyle";
@@ -48,13 +48,16 @@ const StaffHeader = () => {
                 <Navbar.Collapse id="staff-navbar">
                     <Nav className="mx-auto align-items-lg-center">
                         <Nav.Link as={Link} to="/staff/orders" className="px-3 fw-bold" style={linkStyle("orders")} onMouseEnter={() => setHover("orders")} onMouseLeave={() => setHover("")}>
-                            <FaBoxOpen className="me-1" size={13} />Đơn hàng
+                            Đơn hàng
                         </Nav.Link>
                         <Nav.Link as={Link} to="/staff/products" className="px-3 fw-bold" style={linkStyle("products")} onMouseEnter={() => setHover("products")} onMouseLeave={() => setHover("")}>
-                            <span className="me-1">◈</span>Sản phẩm
+                            Sản phẩm
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/staff/discounts" className="px-3 fw-bold" style={linkStyle("discounts")} onMouseEnter={() => setHover("discounts")} onMouseLeave={() => setHover("")}>
+                            Khuyến mãi
                         </Nav.Link>
                         <Nav.Link as={Link} to="/staff/inventory" className="px-3 fw-bold" style={linkStyle("inventory")} onMouseEnter={() => setHover("inventory")} onMouseLeave={() => setHover("")}>
-                            <FaWarehouse className="me-1" size={13} />Kho hàng
+                            Kho hàng
                         </Nav.Link>
                     </Nav>
 
