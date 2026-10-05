@@ -96,17 +96,19 @@ CORS_ALLOW_CREDENTIALS = True
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "fstoredb",
-        "USER": "root",
-        "PASSWORD": "123456",
-        "HOST": "",  # mặc định localhost
         # "ENGINE": "django.db.backends.mysql",
-        # "NAME": os.environ.get("MYSQLDATABASE"),
-        # "USER": os.environ.get("MYSQLUSER"),
-        # "PASSWORD": os.environ.get("MYSQLPASSWORD"),
-        # "HOST": os.environ.get("MYSQLHOST"),
-        # "PORT": os.environ.get("MYSQLPORT"),
+        # "NAME": "fstoredb",
+        # "USER": "root",
+        # "PASSWORD": "123456",
+        # "HOST": "",  # mặc định localhost
+
+        "ENGINE": "django.db.backends.mysql",
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT', '3306'),
     }
 }
 
