@@ -47,7 +47,8 @@ const Login = () => {
             const loginUser = {
                 id: res.data.user.id,
                 username: res.data.user.username,
-                role: res.data.user.role
+                role: res.data.user.role,
+                avatar: res.data.user.avatar
             };
 
             cookies.save("user", loginUser, { path: "/" });

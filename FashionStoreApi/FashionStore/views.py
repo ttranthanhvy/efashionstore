@@ -187,7 +187,7 @@ class AdminCategoryViewset(viewsets.ModelViewSet):
 class ProductViewset(
     viewsets.GenericViewSet, generics.ListAPIView, generics.RetrieveAPIView
 ):
-    queryset = Product.objects.filter(is_active=True)
+    queryset = Product.objects.filter(is_active=True, category__is_active=True)
     serializer_class = serializers.ProductSerializer
     pagination_class = paginators.ProductPagination
     permission_classes = [permissions.AllowAny]
@@ -1008,7 +1008,7 @@ class AdminDashboardViewSet(viewsets.ViewSet):
         data = serializer.validated_data
         period = data["period"]
         orders = self.filter_orders_by_date(self.valid_orders(), data)
-        orders = orders.filter(payment__status="SUCCESS")
+        orders = orders.filter(payment__status="PAID")
         if period == "month":
             data = (
                 orders.annotate(period_date=TruncMonth("created_date"))
@@ -1076,7 +1076,7 @@ class AdminDashboardViewSet(viewsets.ViewSet):
         data = serializer.validated_data
         limit = data["limit"]
         orders = self.filter_orders_by_date(self.valid_orders(), data)
-        orders = orders.filter(payment__status="SUCCESS")
+        orders = orders.filter(payment__status="PAID")
         details = OrderDetail.objects.filter(order__in=orders)
         products = (details.values("product_variant__product_id", "product_variant__product__name").annotate(
                 quantity_sold=Sum("quantity"),

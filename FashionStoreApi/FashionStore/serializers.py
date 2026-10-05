@@ -53,6 +53,7 @@ class LoginSerializer(TokenObtainPairSerializer):
     username = serializers.CharField(required=True, allow_blank=False)
     password = serializers.CharField(required=True, allow_blank=False, write_only=True)
 
+
     def validate(self, attrs):
         data = super().validate(attrs)
         user = self.user
@@ -64,6 +65,7 @@ class LoginSerializer(TokenObtainPairSerializer):
             "id": user.id,
             "username": user.username,
             "role": user.role,
+            "avatar": str(user.avatar.url)
         }
         return data
 

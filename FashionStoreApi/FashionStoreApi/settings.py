@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-_b5458%(_6xb$7oco!!_1rigch%_4kv=av^eq=cr0u+3q1d6kq
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "efashionstore-production.up.railway.app",
+    "efashionstore.up.railway.app",
     "localhost",
     "127.0.0.1",
 ]

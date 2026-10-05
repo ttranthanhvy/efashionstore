@@ -50,18 +50,11 @@ def verify_vnpay_signature(params):
     if not received_hash:
         return False
 
-    # Copy params để không làm thay đổi request.GET
     params = dict(params)
-
-    # Loại bỏ chữ ký cũ
     params.pop("vnp_SecureHash", None)
     params.pop("vnp_SecureHashType", None)
-
     sorted_params = sorted(params.items())
-
-    query_string = urllib.parse.urlencode(
-        sorted_params, quote_via=urllib.parse.quote_plus
-    )
+    query_string = urllib.parse.urlencode(sorted_params, quote_via=urllib.parse.quote_plus)
 
     calculated_hash = hmac.new(
         settings.VNPAY_HASH_SECRET.encode("utf-8"),
