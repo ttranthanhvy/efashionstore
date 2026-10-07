@@ -1,7 +1,8 @@
 import axios from "axios";
 import cookies from "react-cookies";
 
-const BASE_URL = "http://127.0.0.1:8000/FashionStore/api";
+// const BASE_URL = "http://127.0.0.1:8000/FashionStore/api";
+const BASE_URL = "https://efashionstore.up.railway.app/FashionStore/api";
 
 export const endpoints = {
     login: "/auth/login/",
