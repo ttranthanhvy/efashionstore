@@ -34,7 +34,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
 ]
-CSRF_TRUSTED_ORIGINS = [ "https://efashionstore-production.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = [ "https://efashionstore.up.railway.app"]
 
 # Application definition
 
@@ -87,6 +87,7 @@ WSGI_APPLICATION = "FashionStoreApi.wsgi.application"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://efashionstore.up.railway.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
